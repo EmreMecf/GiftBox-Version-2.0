@@ -1,24 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:giftbox/core/configs/font.dart';
-import 'package:go_router/go_router.dart';
 
 import 'core/configs/thema/theme.dart';
-import 'core/utils/thema_util/util.dart';
+import 'core/utils/go_router.dart';
+import 'core/utils/theme.dart';
 
 void main() {
   runApp(const MyApp());
 }
-
-final GoRouter _router = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-        path: '/',
-        builder: (BuildContext context, GoRouterState state) {
-          return const Home();
-        }),
-  ],
-);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -29,7 +19,7 @@ class MyApp extends StatelessWidget {
     TextTheme textTheme = createTextTheme(context, displayFont, bodyFont);
     MaterialTheme theme = MaterialTheme(textTheme);
     return MaterialApp.router(
-      routerConfig: _router,
+      routerConfig: router,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
