@@ -1,2 +1,2 @@
 var bodyFont = "ABeeZee";
-var displayFont = "WorkSans";
+var displayFont = "ABeeZee";
