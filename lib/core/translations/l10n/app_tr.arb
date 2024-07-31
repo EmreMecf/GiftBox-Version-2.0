@@ -1,0 +1,15 @@
+{
+  "@@locale" : "tr",
+  "app_title": "Hediye Kutusu",
+  "account": "Hesap",
+  "country": "Ülke",
+  "data_usage": "Veri Kullanımı",
+  "display_and_sound": "Görüntü ve Ses",
+  "english": "İngilizce",
+  "general_settings": "Genel Ayarlar",
+  "notifactions": "Bildirimler",
+  "permissions": "İzinler",
+  "phone_language": "Telefon Dili",
+  "privacy": "Gizlilik",
+  "turkish": "Türkçe"
+}
