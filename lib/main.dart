@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'core/configs/thema/theme.dart';
+import 'core/configs/thema/util.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,18 +10,17 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final brightness = View.of(context).platformDispatcher.platformBrightness;
+    TextTheme textTheme = createTextTheme(context, "ABeeZee", "Work Sans");
+    MaterialTheme theme = MaterialTheme(textTheme);
     return MaterialApp(
       title: 'Flutter Demo',
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const Home(),
+      theme: brightness == Brightness.light ? theme.light() : theme.dark(),
+      home: Home(),
     );
   }
 }
