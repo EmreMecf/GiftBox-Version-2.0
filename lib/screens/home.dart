@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
+import 'package:giftbox/features/index.dart';
+import 'package:giftbox/features/homewidgets/index.dart';
 
-class Home extends StatelessWidget {
-  const Home({
-    super.key,
-  });
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.app_title),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.go('/chatbotscreen'),
-        child: const Icon(Icons.add),
+      appBar: CustomAppBarWidget(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            PromoCardWidget(),
+            SearchBarWidget(),
+            HistoryCartWidget(),
+          ],
+        ),
       ),
     );
   }

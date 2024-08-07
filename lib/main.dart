@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:giftbox/core/configs/font.dart';
 import 'package:giftbox/services/injector.dart';
-import 'package:giftbox/viewmodel/chat_bot_view_model.dart';
+import 'package:giftbox/viewmodel/index.dart';
 import 'package:provider/provider.dart';
 
 import 'core/configs/thema/theme.dart';
@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ChatGptViewModel()),
+        ChangeNotifierProvider(create: (_) => HistoryViewModel())
       ],
       child: MaterialApp.router(
         routerConfig: router,
