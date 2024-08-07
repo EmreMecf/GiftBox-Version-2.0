@@ -6,7 +6,14 @@ class ChatGptRepository {
 
   ChatGptRepository(this.chatGptApiClient);
 
-  Future<ChatGptChatResponseModel> sendMessage(String message) async {
-    return await chatGptApiClient.sendMessage(message);
+  Future<Result<ChatGptChatResponseModel, Exception>> sendMessage(
+      String message) async {
+    try {
+      final response = await chatGptApiClient.sendMessage(message);
+      return Success<ChatGptChatResponseModel, Exception>(
+          response as ChatGptChatResponseModel);
+    } catch (e) {
+      return Failure<ChatGptChatResponseModel, Exception>(e as Exception);
+    }
   }
 }

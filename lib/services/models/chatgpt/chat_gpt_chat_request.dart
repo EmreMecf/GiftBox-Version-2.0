@@ -8,7 +8,7 @@ class ChatGptChatRequestModel with _$ChatGptChatRequestModel {
   const factory ChatGptChatRequestModel({
     required String model,
     required List<ChatGptChatMessageModel> messages,
-    int? maxTokens,
+    @JsonKey(name: 'max_tokens') int? maxTokens,
     double? temperature,
   }) = _ChatGptChatRequestModel;
 
