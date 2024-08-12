@@ -10,9 +10,11 @@ final injector = GetIt.instance;
 
 Future initInjector() async {
   final chatGptDio =
-      Dio(BaseOptions(baseUrl: dotenv.get("CHATGPT_BASE_URL"), headers: {
+      Dio(BaseOptions(baseUrl: dotenv.get('CHATGPT_BASE_URL'), headers: {
     "Authorization": "Bearer ${dotenv.get('CHATGPT_SECRET_KEY')}",
     "Content-Type": "application/json",
+    "OpenAI-Organization": "${dotenv.get('CHATGPT_ORGANIZATION')}",
+    "OpenAI-Project": "${dotenv.get('CHATGPT_PROJECT')}",
   }));
   chatGptDio.interceptors.add(PrettyDioLogger(
     requestHeader: true,

@@ -10,7 +10,7 @@ class ChatGptChatResponseModel with _$ChatGptChatResponseModel {
     required String object,
     required int created,
     required String model,
-    required List<ChatGptChatChoiceModel> choice,
+    required List<ChatGptChatChoiceModel> choices,
   }) = _ChatGptChatResponseModel;
 
   factory ChatGptChatResponseModel.fromJson(Map<String, dynamic> json) =>
@@ -20,7 +20,7 @@ class ChatGptChatResponseModel with _$ChatGptChatResponseModel {
 @freezed
 class ChatGptChatChoiceModel with _$ChatGptChatChoiceModel {
   const factory ChatGptChatChoiceModel({
-    required ChatMessageModel chaMessage,
+    required ChatMessageModel message,
   }) = _ChatGptChatChoiceModel;
 
   factory ChatGptChatChoiceModel.fromJson(Map<String, dynamic> json) =>

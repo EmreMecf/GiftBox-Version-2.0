@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:giftbox/viewmodel/index.dart';
 import 'package:provider/provider.dart';
 
-class HistoryCartWidget extends StatelessWidget {
+class HistoryCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final historyItems = Provider.of<HistoryViewModel>(context).historyItems;

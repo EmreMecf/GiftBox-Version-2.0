@@ -1,15 +1,15 @@
 {
-  "@@locale" : "en",
+  "@@locale": "en",
   "app_title": "GiftBox",
   "account": "Account",
   "country": "Country",
-  "data_usage": "Data Usage",
-  "display_and_sound": "Display and Sound",
-  "english": "English",
-  "general_settings": "General Settings",
-  "notifactions": "Notifications",
-  "permissions": "Permissions",
-  "phone_language": "Phone Language",
-  "privacy": "Privacy",
-  "turkish": "Turkish"
+  "nav_bar_home_label": "Home",
+  "home_promo_cart_heading": "Find a Gift with Mind Box",
+  "home_promo_cart_title": "Are you indecisive about choosing a gift? MindBox helps you find the perfect gifts for your loved ones that match their interests, hobbies, and personality in seconds.",
+  "nav_bar_calender_label": "Calender",
+  "home_promo_cart_button": "Find a Gift",
+  "history_cart_today": "Today",
+  "history_cart_yesterday": "Yesterday",
+  "history_cart_last_7": "Last 7 Days",
+  "history_cart_last_30": "Last 30 Days"
 }

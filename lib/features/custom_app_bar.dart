@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomAppBarWidget extends StatelessWidget
-    implements PreferredSizeWidget {
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(

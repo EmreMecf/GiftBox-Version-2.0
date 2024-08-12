@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:giftbox/viewmodel/index.dart';
 import 'package:provider/provider.dart';
 
-class SearchBarWidget extends StatelessWidget {
+class SearchBarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(

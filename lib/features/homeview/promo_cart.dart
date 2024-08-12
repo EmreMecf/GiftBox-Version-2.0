@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
-class PromoCardWidget extends StatelessWidget {
-  const PromoCardWidget({super.key});
+class PromoCard extends StatelessWidget {
+  const PromoCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,22 +19,24 @@ class PromoCardWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Mind Box ile Hediye Bul',
-                        style: TextStyle(
+                    Text(AppLocalizations.of(context)!.home_promo_cart_heading,
+                        style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.teal)),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Hediye seçimi konusunda kararsız mı kaldın? MindBox, sevdiklerinin ilgi alanlarına, hobilerine ve kişiligine en uygun hediyeleri saniyeler içinde bulmanı saglar.',
+                    Text(
+                      AppLocalizations.of(context)!.home_promo_cart_title,
                       style: TextStyle(fontSize: 14),
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => context.go('/chatbotscreen'),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.teal),
-                      child: const Text('Hediye Bul'),
+                      child: Text(
+                        AppLocalizations.of(context)!.home_promo_cart_button,
+                      ),
                     ),
                   ],
                 ),

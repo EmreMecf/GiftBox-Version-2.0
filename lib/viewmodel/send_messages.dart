@@ -3,29 +3,27 @@ import 'package:get_it/get_it.dart';
 import 'package:giftbox/services/models/index.dart';
 import 'package:giftbox/services/repositories/index.dart';
 
-class ChatGptViewModel with ChangeNotifier {
+class SendMessagesViewModel with ChangeNotifier {
   final ChatGptRepository _chatGptRepository =
       GetIt.instance<ChatGptRepository>();
 
-  final List<ChatGptChatMessageModel> _messages = [];
+  final List<ChatMessageModel> _messages = [];
   bool _isLoading = false;
 
-  List<ChatGptChatMessageModel> get messages => _messages;
+  List<ChatMessageModel> get messages => _messages;
 
   bool get isLoading => _isLoading;
 
   Future<void> sendMessage(String message) async {
-    _messages.add(ChatGptChatMessageModel(role: 'user', content: message));
-    _isLoading = true;
-    notifyListeners();
+    _messages.add(ChatMessageModel(role: 'user', content: message));
 
     try {
-      final result = await _chatGptRepository.sendMessage(message);
+      final result = await _chatGptRepository.chaMessage(message);
       if (result is Success<ChatGptChatResponseModel, Exception>) {
-        _messages.add(
-            result.value.choice.first.chaMessage as ChatGptChatMessageModel);
+        final responseMessage = result.value.choices.first.message;
+        _messages.add(responseMessage);
       } else if (result is Failure<ChatGptChatResponseModel, Exception>) {
-        _messages.add(ChatGptChatMessageModel(
+        _messages.add(ChatMessageModel(
           role: 'bot',
           content: 'Failed to get response: ${result.exception}',
         ));

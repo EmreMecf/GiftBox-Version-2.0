@@ -26,10 +26,12 @@ class MyApp extends StatelessWidget {
     MaterialTheme theme = MaterialTheme(textTheme);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ChatGptViewModel()),
-        ChangeNotifierProvider(create: (_) => HistoryViewModel())
+        ChangeNotifierProvider(create: (_) => SendMessagesViewModel()),
+        ChangeNotifierProvider(create: (_) => HistoryViewModel()),
+        ChangeNotifierProvider(create: (_) => MessagesViewModel()),
       ],
       child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         routerConfig: router,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,

@@ -1,15 +1,15 @@
 {
-  "@@locale" : "tr",
+  "@@locale": "tr",
   "app_title": "Hediye Kutusu",
   "account": "Hesap",
   "country": "Ülke",
-  "data_usage": "Veri Kullanımı",
-  "display_and_sound": "Görüntü ve Ses",
-  "english": "İngilizce",
-  "general_settings": "Genel Ayarlar",
-  "notifactions": "Bildirimler",
-  "permissions": "İzinler",
-  "phone_language": "Telefon Dili",
-  "privacy": "Gizlilik",
-  "turkish": "Türkçe"
+  "nav_bar_home_label": "Ana Sayfa",
+  "home_promo_cart_heading": "Mind Box ile Hediye Bul",
+  "home_promo_cart_title": "Hediye seçimi konusunda kararsız mı kaldın? MindBox, sevdiklerinin ilgi alanlarına, hobilerine ve kişiligine en uygun hediyeleri saniyeler içinde bulmanı saglar.",
+  "nav_bar_calender_label": "Tarih",
+  "home_promo_cart_button": "Hediye Bul",
+  "history_cart_today": "Bugün",
+  "history_cart_yesterday": "Dün",
+  "history_cart_last_7": "Son 7 Gün",
+  "history_cart_last_30": "Son 30 Gün"
 }

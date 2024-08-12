@@ -7,14 +7,13 @@ class ChatGptApiClient {
 
   ChatGptApiClient(this.chatGptDio);
 
-  Future<Response<ChatGptChatResponseModel>> sendMessage(String message) async {
+  Future<ChatGptChatResponseModel> chaMessage(String message) async {
     final request = ChatGptChatRequestModel(
-        model: dotenv.get("CHATGPT_MODEL"),
-        messages: [ChatGptChatMessageModel(role: "user", content: message)],
-        maxTokens: 100,
-        temperature: 1);
+      model: dotenv.get("CHATGPT_MODEL"),
+      messages: [ChatGptChatMessageModel(role: "user", content: message)],
+    );
 
-    return await chatGptDio.post<ChatGptChatResponseModel>("/chat/completions",
-        data: request);
+    final response = await chatGptDio.post("/chat/completions", data: request);
+    return ChatGptChatResponseModel.fromJson(response.data);
   }
 }

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../viewmodel/chat_bot_view_model.dart';
+import '../features/custom_app_bar.dart';
+import '../features/custom_nav_bar.dart';
+import '../features/messagesview/messages_list.dart';
+import '../features/messagesview/send_messages_view.dart';
+import '../viewmodel/send_messages.dart';
 
 class ChatBotScreen extends StatefulWidget {
   @override
@@ -9,16 +13,20 @@ class ChatBotScreen extends StatefulWidget {
 }
 
 class _ChatBotScreenState extends State<ChatBotScreen> {
-  final TextEditingController _controller = TextEditingController();
+  int _currentIndex = 0;
+
+  void _onNavBarTap(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final chatViewModel = Provider.of<ChatGptViewModel>(context);
+    final chatViewModel = Provider.of<SendMessagesViewModel>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Chat Bot'),
-      ),
+      appBar: CustomAppBar(),
       body: Column(
         children: [
           Expanded(
@@ -26,40 +34,20 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
               itemCount: chatViewModel.messages.length,
               itemBuilder: (context, index) {
                 final message = chatViewModel.messages[index];
-                return ListTile(
-                  title: Text(message.content),
-                  subtitle: Text(message.role == 'user' ? 'You' : 'Bot'),
-                );
+                if (message.role == 'user') {
+                  return UserMessage(message: message.content);
+                } else {
+                  return AiMessage(message: message.content);
+                }
               },
             ),
           ),
-          if (chatViewModel.isLoading) LinearProgressIndicator(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      hintText: 'Buraya Yaz',
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () async {
-                    final message = _controller.text.trim();
-                    if (message.isNotEmpty) {
-                      await chatViewModel.sendMessage(message);
-                      _controller.clear();
-                    }
-                  },
-                ),
-              ],
-            ),
-          ),
+          const SendMessagesView(),
         ],
+      ),
+      bottomNavigationBar: CustomNavBar(
+        currentIndex: _currentIndex,
+        onNavBarTap: _onNavBarTap,
       ),
     );
   }
