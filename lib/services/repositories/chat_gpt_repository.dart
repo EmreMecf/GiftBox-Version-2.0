@@ -10,9 +10,9 @@ class ChatGptRepository {
       String message) async {
     try {
       final response = await chatGptApiClient.chaMessage(message);
-      return Success<ChatGptChatResponseModel, Exception>(response);
+      return Success(response);
     } on Exception catch (s, e) {
-      return Failure<ChatGptChatResponseModel, Exception>(e as Exception);
+      return Failure(e as Exception);
     }
   }
 }

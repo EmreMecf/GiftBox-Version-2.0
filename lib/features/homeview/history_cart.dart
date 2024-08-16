@@ -3,6 +3,8 @@ import 'package:giftbox/viewmodel/index.dart';
 import 'package:provider/provider.dart';
 
 class HistoryCart extends StatelessWidget {
+  const HistoryCart({super.key});
+
   @override
   Widget build(BuildContext context) {
     final historyItems = Provider.of<HistoryViewModel>(context).historyItems;
@@ -38,8 +40,9 @@ class HistoryCart extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
+              style:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 8),
           ...items.map((item) {
             return Card(
               shape: RoundedRectangleBorder(

@@ -9,7 +9,7 @@ class SendMessagesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chatViewModel = Provider.of<SendMessagesViewModel>(context);
-    final TextEditingController _controller = TextEditingController();
+    final TextEditingController controller = TextEditingController();
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -17,19 +17,19 @@ class SendMessagesView extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
-              controller: _controller,
+              controller: controller,
               decoration: const InputDecoration(
                 hintText: 'Buraya Yaz',
               ),
             ),
           ),
           IconButton(
-            icon: Icon(Icons.send),
+            icon: const Icon(Icons.send),
             onPressed: () async {
-              final message = _controller.text.trim();
+              final message = controller.text.trim();
               if (message.isNotEmpty) {
                 await chatViewModel.sendMessage(message);
-                _controller.clear();
+                controller.clear();
               }
             },
           ),

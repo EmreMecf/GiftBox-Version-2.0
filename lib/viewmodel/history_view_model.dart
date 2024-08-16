@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HistoryViewModel with ChangeNotifier {
-  List<Map<String, String>> _historyItems = [
+  final List<Map<String, String>> _historyItems = [
     {'date': 'Bugün', 'title': 'Chat History Item 1'},
     {'date': 'Dün', 'title': 'Chat History Item 2'},
     {'date': 'Son 7 gün', 'title': 'Chat History Item 3'},

@@ -21,8 +21,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
-      body: SingleChildScrollView(
+      appBar: const CustomAppBar(),
+      body: const SingleChildScrollView(
         child: Column(
           children: [
             PromoCard(),

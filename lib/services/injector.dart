@@ -3,8 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:giftbox/services/apis/index.dart';
+import 'package:giftbox/services/firebase/index.dart';
 import 'package:giftbox/services/repositories/index.dart';
+import 'package:giftbox/viewmodel/index.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
+import 'navigation/navigation_service.dart';
 
 final injector = GetIt.instance;
 
@@ -13,8 +17,8 @@ Future initInjector() async {
       Dio(BaseOptions(baseUrl: dotenv.get('CHATGPT_BASE_URL'), headers: {
     "Authorization": "Bearer ${dotenv.get('CHATGPT_SECRET_KEY')}",
     "Content-Type": "application/json",
-    "OpenAI-Organization": "${dotenv.get('CHATGPT_ORGANIZATION')}",
-    "OpenAI-Project": "${dotenv.get('CHATGPT_PROJECT')}",
+    "OpenAI-Organization": dotenv.get('CHATGPT_ORGANIZATION'),
+    "OpenAI-Project": dotenv.get('CHATGPT_PROJECT'),
   }));
   chatGptDio.interceptors.add(PrettyDioLogger(
     requestHeader: true,
@@ -27,12 +31,34 @@ Future initInjector() async {
     enabled: kDebugMode,
   ));
 
+  //Packages
   injector.registerLazySingleton<Dio>(() => chatGptDio,
       instanceName: "ChatGPTDio");
 
+  //navigator
+  injector.registerLazySingleton(() => NavigationService(injector()));
+
+  //Services
   injector.registerFactory<ChatGptApiClient>(
       () => ChatGptApiClient(injector(instanceName: "ChatGPTDio")));
+  injector.registerFactory<FirebaseAuthService>(() => FirebaseAuthService());
 
+  //Repositories
   injector
       .registerFactory<ChatGptRepository>(() => ChatGptRepository(injector()));
+  injector.registerFactory<FirebaseAuthRepository>(
+      () => FirebaseAuthRepository(injector()));
+
+  //ViewModel
+  injector.registerFactory<SignInViewModel>(
+      () => SignInViewModel(injector(), injector()));
+  injector.registerFactory<SignOutViewModel>(
+      () => SignOutViewModel(injector(), injector()));
+  injector.registerFactory<MessagesViewModel>(() => MessagesViewModel());
+  injector.registerFactory<HistoryViewModel>(() => HistoryViewModel());
+  injector
+      .registerFactory<SendMessagesViewModel>(() => SendMessagesViewModel());
+  injector
+      .registerFactory<ProfileViewModel>(() => ProfileViewModel(injector()));
+  injector.registerFactory<HomeViewModel>(() => HomeViewModel(injector()));
 }

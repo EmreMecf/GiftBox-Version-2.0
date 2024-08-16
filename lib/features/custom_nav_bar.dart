@@ -5,7 +5,8 @@ class CustomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onNavBarTap;
 
-  CustomNavBar({required this.currentIndex, required this.onNavBarTap});
+  const CustomNavBar(
+      {super.key, required this.currentIndex, required this.onNavBarTap});
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +23,11 @@ class CustomNavBar extends StatelessWidget {
             onTap: onNavBarTap,
             items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: const Icon(Icons.home),
                 label: AppLocalizations.of(context)?.nav_bar_home_label,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_month),
+                icon: const Icon(Icons.calendar_month),
                 label: AppLocalizations.of(context)?.nav_bar_calender_label,
               ),
             ],
@@ -37,7 +38,7 @@ class CustomNavBar extends StatelessWidget {
           left: MediaQuery.of(context).size.width / 2 - 30,
           child: FloatingActionButton(
             onPressed: () {},
-            child: Icon(Icons.add),
+            child: const Icon(Icons.add),
           ),
         ),
       ],

@@ -20,8 +20,8 @@ class SendMessagesViewModel with ChangeNotifier {
     try {
       final result = await _chatGptRepository.chaMessage(message);
       if (result is Success<ChatGptChatResponseModel, Exception>) {
-        final responseMessage = result.value.choices.first.message;
-        _messages.add(responseMessage);
+        final responseMessage = result.value?.choices.first.message;
+        _messages.add(responseMessage!);
       } else if (result is Failure<ChatGptChatResponseModel, Exception>) {
         _messages.add(ChatMessageModel(
           role: 'bot',

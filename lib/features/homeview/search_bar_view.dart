@@ -3,6 +3,8 @@ import 'package:giftbox/viewmodel/index.dart';
 import 'package:provider/provider.dart';
 
 class SearchBarView extends StatelessWidget {
+  const SearchBarView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(

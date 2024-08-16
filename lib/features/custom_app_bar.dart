@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:giftbox/viewmodel/home_view_model.dart';
+import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final homeViewModel = context.read<HomeViewModel>();
     return ClipRRect(
-      borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.0)),
+      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(16.0)),
       child: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
         title: Row(
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                homeViewModel.goToProfile();
+              },
               child: const CircleAvatar(
                 radius: 20,
                 backgroundImage: AssetImage(
@@ -42,5 +43,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

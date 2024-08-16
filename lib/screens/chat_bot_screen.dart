@@ -8,6 +8,8 @@ import '../features/messagesview/send_messages_view.dart';
 import '../viewmodel/send_messages.dart';
 
 class ChatBotScreen extends StatefulWidget {
+  const ChatBotScreen({super.key});
+
   @override
   _ChatBotScreenState createState() => _ChatBotScreenState();
 }
@@ -23,10 +25,10 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final chatViewModel = Provider.of<SendMessagesViewModel>(context);
+    final chatViewModel = context.watch<SendMessagesViewModel>();
 
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: Column(
         children: [
           Expanded(
