@@ -30,14 +30,8 @@ class FirebaseAuthRepository {
 
   Future<Result<void, Exception>> updateDisplayName(String newName) async {
     try {
-      final user = currentUser;
-      if (user != null) {
-        await user.updateDisplayName(newName);
-        await user.reload();
-        return const Success(null);
-      } else {
-        return Failure(Exception("User is not logged in"));
-      }
+      await firebaseAuthService.currentUser?.updateDisplayName(newName);
+      return const Success(null);
     } on Exception catch (e) {
       return Failure(e);
     }

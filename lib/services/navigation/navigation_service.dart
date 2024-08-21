@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giftbox/screens/feed_back_screen.dart';
 import 'package:giftbox/services/repositories/index.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,19 +23,34 @@ class NavigationService {
           builder: (BuildContext context, GoRouterState state) {
             return _firebaseAuthRepository.currentUser != null
                 ? const HomeScreen()
-                : const LoginScreen(); // Giriş ekranı
+                : const LoginScreen();
           },
           routes: <RouteBase>[
             GoRoute(
               path: 'chatbot',
               builder: (BuildContext context, GoRouterState state) {
-                return const ChatBotScreen(); // Ana ekrandan erişilebilecek chatbot ekranı
+                return const ChatBotScreen();
               },
             ),
             GoRoute(
                 path: 'profile',
                 builder: (BuildContext context, GoRouterState state) {
                   return const ProfileScreen();
+                }),
+            GoRoute(
+                path: 'editprofile',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const EditProfileScreen();
+                }),
+            GoRoute(
+                path: 'settings',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const SettingsScreen();
+                }),
+            GoRoute(
+                path: 'feedback',
+                builder: (BuildContext context, GoRouterState state) {
+                  return FeedbackScreen();
                 }),
           ],
         ),
@@ -52,5 +68,17 @@ class NavigationService {
 
   void goProfile() {
     _router.go('/profile');
+  }
+
+  void goEditProfile() {
+    _router.go('/editprofile');
+  }
+
+  void goSettings() {
+    _router.go('/settings');
+  }
+
+  void goFeedback() {
+    _router.go('/feedback');
   }
 }

@@ -7,14 +7,22 @@ class OptionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final signOutViewModel = context.watch<SignOutViewModel>();
+    final signOutViewModel = context.read<SignOutViewModel>();
+    final profileRouteViewModel = context.read<ProfileRouteViewModel>();
 
     return Column(
       children: [
         ListTile(
           leading: const Icon(Icons.settings),
           title: const Text('Ayarlar'),
-          onTap: () {},
+          onTap: () {
+            profileRouteViewModel.goToSettings();
+          },
+        ),
+        const Divider(
+          thickness: 2,
+          indent: 20,
+          endIndent: 20,
         ),
         ListTile(
           leading: const Icon(Icons.logout),

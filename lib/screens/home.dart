@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:giftbox/features/homeview/index.dart';
 import 'package:giftbox/features/index.dart';
+import 'package:provider/provider.dart';
+
+import '../viewmodel/profile_view_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,6 +14,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final profileViewModel = context.read<ProfileViewModel>();
+      profileViewModel.loadUserData();
+    });
+  }
 
   void _onNavBarTap(int index) {
     setState(() {

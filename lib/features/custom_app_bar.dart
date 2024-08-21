@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:giftbox/viewmodel/home_view_model.dart';
+import 'package:giftbox/viewmodel/index.dart';
 import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -8,6 +8,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final homeViewModel = context.read<HomeViewModel>();
+    final profileViewModel = context.watch<ProfileViewModel>();
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(bottom: Radius.circular(16.0)),
       child: AppBar(
@@ -21,17 +22,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               },
               child: const CircleAvatar(
                 radius: 20,
-                backgroundImage: AssetImage(
-                    'lib/assets/user.png'), // Replace with the actual image path
+                backgroundImage: AssetImage('lib/assets/user.png'),
               ),
             ),
             const SizedBox(width: 16),
-            const Expanded(
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Emre Çiftci',
-                      style: TextStyle(fontSize: 18, color: Colors.black)),
+                  Text(profileViewModel.userName!,
+                      style:
+                          const TextStyle(fontSize: 18, color: Colors.black)),
                 ],
               ),
             ),

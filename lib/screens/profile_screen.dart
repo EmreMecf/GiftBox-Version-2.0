@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:giftbox/features/profileview/edit_profile_button.dart';
 import 'package:giftbox/viewmodel/profile_view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../features/index.dart';
 import '../features/profileview/index.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -13,6 +13,24 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final profileViewModel = context.read<ProfileViewModel>();
+      profileViewModel.loadUserData();
+    });
+  }
+
+  void _onNavBarTap(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final profileViewModel = context.read<ProfileViewModel>();
@@ -33,6 +51,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
+      bottomNavigationBar: CustomNavBar(
+        currentIndex: _currentIndex,
+        onNavBarTap: _onNavBarTap,
+      ),
     );
   }
 }

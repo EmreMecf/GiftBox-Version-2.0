@@ -8,7 +8,7 @@ class PromoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeViewModel = context.watch<HomeViewModel>();
+    final homeViewModel = context.read<HomeViewModel>();
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(

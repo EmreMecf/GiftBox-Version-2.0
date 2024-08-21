@@ -38,8 +38,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => injector<MessagesViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<SignInViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<SignOutViewModel>()),
-        ChangeNotifierProvider(create: (_) => injector<ProfileViewModel>()),
+        ChangeNotifierProvider(
+            create: (_) => injector<ProfileViewModel>()..loadUserData()),
         Provider(create: (_) => injector<HomeViewModel>()),
+        Provider(create: (_) => injector<ProfileRouteViewModel>()),
+        Provider(create: (_) => injector<SettingsViewModel>()),
+        ChangeNotifierProvider(create: (_) => injector<ProfileEditViewModel>()),
+        ChangeNotifierProvider(
+            create: (_) => injector<UpdateProfileViewModel>()),
+        ChangeNotifierProvider(create: (_) => injector<LanguageViewModel>()),
+        ChangeNotifierProvider(create: (_) => injector<FeedbackViewModel>()),
+        ChangeNotifierProvider(create: (_) => injector<ErrorViewModel>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

@@ -12,14 +12,10 @@ class ProfilAvatarPromoCard extends StatefulWidget {
 class _ProfilAvatarPromoCardState extends State<ProfilAvatarPromoCard> {
   @override
   Widget build(BuildContext context) {
-    final profileViewModel = context.read<ProfileViewModel>();
-    profileViewModel.loadUserData();
-
-    final userName = profileViewModel.userName ?? 'Kullanıcı Adı Yok';
-    final userEmail = profileViewModel.userEmail ?? 'Email Yok';
+    final profileViewModel = context.watch<ProfileViewModel>();
 
     if (profileViewModel.isLoading) {
-      return const CircularProgressIndicator(); // or some placeholder widget
+      return const CircularProgressIndicator();
     }
     return Stack(
       clipBehavior: Clip.none,
@@ -35,11 +31,11 @@ class _ProfilAvatarPromoCardState extends State<ProfilAvatarPromoCard> {
             ),
           ),
         ),
-        const Positioned(
+        Positioned(
           top: 50,
           child: CircleAvatar(
             radius: 50,
-            backgroundImage: AssetImage('lib/assets/user.png'),
+            backgroundImage: NetworkImage(profileViewModel.userPhoto!),
           ),
         ),
         Positioned(
@@ -47,14 +43,14 @@ class _ProfilAvatarPromoCardState extends State<ProfilAvatarPromoCard> {
           child: Column(
             children: [
               Text(
-                userName,
+                profileViewModel.userName!,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                userEmail,
+                profileViewModel.userEmail!,
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey[600],

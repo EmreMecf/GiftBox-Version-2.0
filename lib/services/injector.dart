@@ -58,7 +58,19 @@ Future initInjector() async {
   injector.registerFactory<HistoryViewModel>(() => HistoryViewModel());
   injector
       .registerFactory<SendMessagesViewModel>(() => SendMessagesViewModel());
-  injector
-      .registerFactory<ProfileViewModel>(() => ProfileViewModel(injector()));
+  injector.registerFactory<ProfileViewModel>(
+      () => ProfileViewModel(injector(), injector()));
   injector.registerFactory<HomeViewModel>(() => HomeViewModel(injector()));
+  injector.registerFactory<ProfileRouteViewModel>(
+      () => ProfileRouteViewModel(injector()));
+  injector.registerFactory<ProfileEditViewModel>(
+      () => ProfileEditViewModel(injector()));
+  injector.registerFactory<UpdateProfileViewModel>(
+      () => UpdateProfileViewModel(injector(), injector(), injector()));
+  injector.registerFactory<LanguageViewModel>(() => LanguageViewModel());
+  injector
+      .registerFactory<FeedbackViewModel>(() => FeedbackViewModel(injector()));
+  injector.registerFactory<ErrorViewModel>(() => ErrorViewModel());
+  injector
+      .registerFactory<SettingsViewModel>(() => SettingsViewModel(injector()));
 }
