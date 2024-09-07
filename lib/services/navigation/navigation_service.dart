@@ -29,7 +29,7 @@ class NavigationService {
             GoRoute(
               path: 'chatbot',
               builder: (BuildContext context, GoRouterState state) {
-                return const ChatBotScreen();
+                return ChatBotScreen();
               },
             ),
             GoRoute(
@@ -50,7 +50,17 @@ class NavigationService {
             GoRoute(
                 path: 'feedback',
                 builder: (BuildContext context, GoRouterState state) {
-                  return FeedbackScreen();
+                  return const FeedbackScreen();
+                }),
+            GoRoute(
+                path: 'themesettings',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const ThemeSettingScreen();
+                }),
+            GoRoute(
+                path: 'calendar',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const CalendarScreen();
                 }),
           ],
         ),
@@ -80,5 +90,13 @@ class NavigationService {
 
   void goFeedback() {
     _router.go('/feedback');
+  }
+
+  void goThemeSetting() {
+    _router.go('/themesettings');
+  }
+
+  void goCalendar() {
+    _router.go('/calendar');
   }
 }

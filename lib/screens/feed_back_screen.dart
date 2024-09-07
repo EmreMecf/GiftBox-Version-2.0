@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
 
 import '../features/feedback/index.dart';
+import '../features/index.dart';
 
-class FeedbackScreen extends StatelessWidget {
+class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({super.key});
+
+  @override
+  State<FeedbackScreen> createState() => _FeedbackScreenState();
+}
+
+class _FeedbackScreenState extends State<FeedbackScreen> {
+  int _currentIndex = 0;
+
+  void _onNavBarTap(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +34,12 @@ class FeedbackScreen extends StatelessWidget {
             FeedbackDescription(),
             SizedBox(height: 60),
             FeedbackButtons(),
-            FeedbackError(),
           ],
         ),
+      ),
+      bottomNavigationBar: CustomNavBar(
+        currentIndex: _currentIndex,
+        onNavBarTap: _onNavBarTap,
       ),
     );
   }

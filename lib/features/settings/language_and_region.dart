@@ -14,9 +14,6 @@ class LanguageAndRegionWidget extends StatelessWidget {
         ListTile(
           title: const Text('Dil', style: TextStyle(fontSize: 18)),
           trailing: Text(locale.languageCode == 'tr' ? 'Türkçe' : 'English'),
-          onTap: () {
-            // Handle language change tap
-          },
         ),
         ListTile(
           title: const Text('Bölge', style: TextStyle(fontSize: 18)),

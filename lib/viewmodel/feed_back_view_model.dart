@@ -26,7 +26,7 @@ class FeedbackViewModel with ChangeNotifier {
   }
 
   void onGoogleStorePressed() async {
-    final String packageName = "com.ornekdomain.uygulama";
+    const String packageName = "com.ornekdomain.uygulama";
     final Uri playStoreUrl =
         Uri.parse("https://play.google.com/store/apps/details?id=$packageName");
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:giftbox/viewmodel/index.dart';
+import 'package:provider/provider.dart';
 
 class CustomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -10,6 +12,7 @@ class CustomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navBarRoute = context.read<NavBarRoute>();
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -20,7 +23,14 @@ class CustomNavBar extends StatelessWidget {
           ),
           child: BottomNavigationBar(
             currentIndex: currentIndex,
-            onTap: onNavBarTap,
+            onTap: (index) {
+              onNavBarTap(index);
+              if (index == 0) {
+                navBarRoute.goToHome();
+              } else if (index == 1) {
+                navBarRoute.goToCalendar();
+              }
+            },
             items: [
               BottomNavigationBarItem(
                 icon: const Icon(Icons.home),

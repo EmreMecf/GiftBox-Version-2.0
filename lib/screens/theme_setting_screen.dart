@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../features/index.dart';
-import '../features/settings/index.dart';
+import '../features/themesettings/index.dart';
 
-class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+class ThemeSettingScreen extends StatefulWidget {
+  const ThemeSettingScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  State<ThemeSettingScreen> createState() => _ThemeSettingScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _ThemeSettingScreenState extends State<ThemeSettingScreen> {
   int _currentIndex = 0;
 
   void _onNavBarTap(int index) {
@@ -23,16 +23,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profil Düzenle'),
+        title: const Text('Theme Ayarları'),
       ),
       body: const Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ThemeAndFeedbackWidget(),
             SizedBox(height: 20),
-            LanguageAndRegionWidget(),
+            ThemeToggleWidget(),
           ],
         ),
       ),

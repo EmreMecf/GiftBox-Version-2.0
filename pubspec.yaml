@@ -56,6 +56,9 @@ dependencies:
   url_launcher: ^6.1.14
   ionicons: ^0.2.2
   eva_icons_flutter: ^3.1.0
+  table_calendar: ^3.0.9
+  backdrop: ^0.9.1
+  sliding_up_panel: ^2.0.0+1
 
 
 

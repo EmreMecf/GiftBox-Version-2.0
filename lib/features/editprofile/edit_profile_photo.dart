@@ -15,6 +15,7 @@ class EditProfilePhoto extends StatelessWidget {
           radius: 50,
           backgroundImage: NetworkImage(profileViewModel.userPhoto!),
         ),
+        //yeni bir dosyaya aktar
         TextButton(
           onPressed: () {},
           child: const Text('Fotoğraf Değiştir'),

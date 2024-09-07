@@ -14,7 +14,7 @@ class ThemeAndFeedbackWidget extends StatelessWidget {
           leading: const Icon(Icons.format_paint),
           title: const Text('Tema Ayarları'),
           onTap: () {
-            // Handle theme settings tap
+            settingsViewModel.goToThemeSettings();
           },
         ),
         const Divider(),

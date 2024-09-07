@@ -9,6 +9,7 @@ class ProfileRouteViewModel {
     _navigationService.goEditProfile();
   }
 
+// yeni bir view model aç
   void goToSettings() {
     _navigationService.goSettings();
   }

@@ -11,6 +11,6 @@ class LanguageViewModel extends ChangeNotifier {
     } else if (language == 'English') {
       _currentLocale = const Locale('en');
     }
-    notifyListeners(); // This triggers a rebuild in the app's UI
+    notifyListeners();
   }
 }

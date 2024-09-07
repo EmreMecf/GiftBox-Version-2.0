@@ -1,9 +1,9 @@
 import 'package:giftbox/services/repositories/index.dart';
 
-class SendMessagesViewModel {
+class SendMessages {
   final ChatGptRepository _chatGptRepository;
 
-  SendMessagesViewModel(this._chatGptRepository);
+  SendMessages(this._chatGptRepository);
 
   Future<void> sendMessage(String message) =>
       _chatGptRepository.chaMessage(message);

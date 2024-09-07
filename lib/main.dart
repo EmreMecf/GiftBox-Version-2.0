@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import 'core/configs/thema/theme.dart';
 import 'core/utils/theme.dart';
+import 'features/feedback/feed_back_error.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -26,7 +27,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = View.of(context).platformDispatcher.platformBrightness;
     TextTheme textTheme = createTextTheme(context, displayFont, bodyFont);
     MaterialTheme theme = MaterialTheme(textTheme);
 
@@ -43,19 +43,39 @@ class MyApp extends StatelessWidget {
         Provider(create: (_) => injector<HomeViewModel>()),
         Provider(create: (_) => injector<ProfileRouteViewModel>()),
         Provider(create: (_) => injector<SettingsViewModel>()),
+        Provider(create: (_) => injector<NavBarRoute>()),
         ChangeNotifierProvider(create: (_) => injector<ProfileEditViewModel>()),
         ChangeNotifierProvider(
             create: (_) => injector<UpdateProfileViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<LanguageViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<FeedbackViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<ErrorViewModel>()),
+        ChangeNotifierProvider(create: (_) => injector<ThemeViewModel>()),
+        ChangeNotifierProvider(create: (_) => injector<CalendarViewModel>()),
+        ChangeNotifierProvider(
+            create: (_) => injector<CategorySelectionViewModel>()),
+        ChangeNotifierProvider(create: (_) => injector<ChatBotViewModel>()),
       ],
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerConfig: injector<NavigationService>().router,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        theme: brightness == Brightness.light ? theme.light() : theme.dark(),
+      child: Consumer<ThemeViewModel>(
+        builder: (context, themeViewModel, child) {
+          return Column(
+            children: [
+              const FeedbackError(),
+              Expanded(
+                child: MaterialApp.router(
+                  debugShowCheckedModeBanner: false,
+                  routerConfig: injector<NavigationService>().router,
+                  localizationsDelegates:
+                      AppLocalizations.localizationsDelegates,
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  theme: theme.light(),
+                  darkTheme: theme.dark(),
+                  themeMode: themeViewModel.themeMode,
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

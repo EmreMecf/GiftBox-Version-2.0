@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../features/editprofile/index.dart';
+import '../features/index.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -10,6 +11,14 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  int _currentIndex = 0;
+
+  void _onNavBarTap(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +35,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             EditProfileForm(),
           ],
         ),
+      ),
+      bottomNavigationBar: CustomNavBar(
+        currentIndex: _currentIndex,
+        onNavBarTap: _onNavBarTap,
       ),
     );
   }

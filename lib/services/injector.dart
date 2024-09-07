@@ -73,4 +73,10 @@ Future initInjector() async {
   injector.registerFactory<ErrorViewModel>(() => ErrorViewModel());
   injector
       .registerFactory<SettingsViewModel>(() => SettingsViewModel(injector()));
+  injector.registerLazySingleton<ThemeViewModel>(() => ThemeViewModel());
+  injector.registerFactory<CalendarViewModel>(() => CalendarViewModel());
+  injector.registerFactory<NavBarRoute>(() => NavBarRoute(injector()));
+  injector.registerFactory<CategorySelectionViewModel>(
+      () => CategorySelectionViewModel());
+  injector.registerFactory<ChatBotViewModel>(() => ChatBotViewModel());
 }

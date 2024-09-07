@@ -8,4 +8,8 @@ class SettingsViewModel {
   void goToFeedback() {
     _navigationService.goFeedback();
   }
+
+  void goToThemeSettings() {
+    _navigationService.goThemeSetting();
+  }
 }
