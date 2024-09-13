@@ -4,8 +4,8 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../../viewmodel/index.dart';
 
-class Calendar extends StatelessWidget {
-  const Calendar({Key? key}) : super(key: key);
+class CalendarWidget extends StatelessWidget {
+  const CalendarWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +15,18 @@ class Calendar extends StatelessWidget {
       firstDay: DateTime.utc(2000, 1, 1),
       lastDay: DateTime.utc(2100, 12, 31),
       focusedDay: calendarViewModel.focusedDay,
-      selectedDayPredicate: (day) {
-        return isSameDay(calendarViewModel.selectedDay, day);
-      },
+      selectedDayPredicate: (day) =>
+          isSameDay(calendarViewModel.selectedDay, day),
       onDaySelected: (selectedDay, focusedDay) {
         calendarViewModel.onDaySelected(selectedDay, focusedDay);
       },
-      calendarStyle: const CalendarStyle(
+      calendarStyle: CalendarStyle(
         todayDecoration: BoxDecoration(
-          color: Colors.blueAccent,
+          color: Theme.of(context).primaryColor, // Temadan alınan renk
           shape: BoxShape.circle,
         ),
         selectedDecoration: BoxDecoration(
-          color: Colors.green,
+          color: Theme.of(context).colorScheme.secondary, // Temadan alınan renk
           shape: BoxShape.circle,
         ),
       ),

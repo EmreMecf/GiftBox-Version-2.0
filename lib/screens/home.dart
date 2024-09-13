@@ -35,14 +35,26 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(),
-      body: const SingleChildScrollView(
-        child: Column(
-          children: [
-            PromoCard(),
-            SearchBarView(),
-            HistoryCart(),
-          ],
-        ),
+      body: Column(
+        children: [
+          PromoCard(),
+          Expanded(
+            child: Consumer<ProfileViewModel>(
+              builder: (context, profileViewModel, child) {
+                final userId = profileViewModel.userId;
+
+                // Eğer kullanıcı kimliği yüklendiyse HistoryCard'a gönderiyoruz
+                if (userId!.isNotEmpty) {
+                  return HistoryCard(userId: userId);
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  ); // Yükleme durumu için.
+                }
+              },
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: CustomNavBar(
         currentIndex: _currentIndex,

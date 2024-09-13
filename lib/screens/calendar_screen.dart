@@ -13,7 +13,7 @@ class CalendarScreen extends StatelessWidget {
       ),
       body: const Column(
         children: [
-          Calendar(),
+          CalendarWidget(),
           SizedBox(height: 20),
           CalendarInputForm(),
           SizedBox(height: 20),

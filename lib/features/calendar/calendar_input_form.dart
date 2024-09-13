@@ -13,22 +13,27 @@ class CalendarInputForm extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          TextField(
-            controller: nameController,
-            decoration: const InputDecoration(
-              labelText: 'Name',
-              border: OutlineInputBorder(),
-            ),
-            onSubmitted: (name) {
+      child: TextField(
+        controller: nameController,
+        decoration: InputDecoration(
+          labelText: 'Name',
+          border: OutlineInputBorder(),
+          suffixIcon: IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              final name = nameController.text.trim();
               if (name.isNotEmpty) {
                 calendarViewModel.addBirthday(name);
                 nameController.clear(); // Giriş sonrası alanı temizle
               }
             },
           ),
-        ],
+        ),
+        style: TextStyle(
+            color: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.color), // Temaya uygun yazı rengi
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../features/messagesview/messages_list.dart';
+import '../services/models/firestore/history_model.dart';
 import '../viewmodel/index.dart';
 import 'category_selection_screen.dart';
 
@@ -15,11 +16,11 @@ class ChatBotScreen extends StatefulWidget {
 
 class _ChatBotScreenState extends State<ChatBotScreen> {
   final ScrollController _scrollController = ScrollController();
+  final PanelController _panelController = PanelController();
 
   @override
   Widget build(BuildContext context) {
     final chatBotViewModel = context.watch<ChatBotViewModel>();
-    final panelController = PanelController();
     final panelHeightOpen = MediaQuery.of(context).size.height * 0.8;
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.08;
 
@@ -28,39 +29,49 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
         title: const Text("Hediyeni Bul"),
       ),
       body: SlidingUpPanel(
-        controller: panelController,
+        controller: _panelController,
         maxHeight: panelHeightOpen,
         minHeight: panelHeightClosed,
         parallaxEnabled: true,
         parallaxOffset: 0.5,
         panelBuilder: (controller) => CustomSlidingUpPanel(
           controller: controller,
-          panelController: panelController,
+          panelController: _panelController,
         ),
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(24.0),
         ),
-        body: buildMessagesList(chatBotViewModel),
-      ),
-    );
-  }
+        body: StreamBuilder<List<HistoryModel>>(
+          stream: chatBotViewModel.fetchHistoryStream(),
+          // Firestore'dan gelen Stream
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return const Center(child: Text("Bir hata oluştu."));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text("Hiç mesaj yok."));
+            }
 
-  Widget buildMessagesList(ChatBotViewModel chatBotViewModel) {
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            controller: _scrollController, // ScrollController ekledik
-            itemCount: chatBotViewModel.messages.length,
-            itemBuilder: (context, index) {
-              final message = chatBotViewModel.messages[index];
-              return message.role == 'user'
-                  ? UserMessage(message: message.content)
-                  : AiMessage(message: message.content);
-            },
-          ),
+            final messages = snapshot.data!;
+
+            return ListView.builder(
+              controller: _scrollController,
+              itemCount: messages.length,
+              itemBuilder: (context, index) {
+                final message = messages[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 12.0),
+                  child: message.userId == chatBotViewModel.userId
+                      ? UserMessage(message: message.userMessage)
+                      : AiMessage(message: message.chatGptResponse),
+                );
+              },
+            );
+          },
         ),
-      ],
+      ),
     );
   }
 }

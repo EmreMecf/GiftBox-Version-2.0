@@ -17,11 +17,10 @@ class SubmitChatGpt extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
         onPressed: () async {
-          final userMessage = chatBotViewModel.userMessage;
           final categorySelection =
               categorySelectionViewModel.buildCategorySelectionModel();
 
-          await chatBotViewModel.sendMessage(userMessage, categorySelection);
+          await chatBotViewModel.sendMessage(categorySelection);
         },
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,

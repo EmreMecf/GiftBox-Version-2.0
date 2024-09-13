@@ -1,18 +1,18 @@
 import 'package:flutter/widgets.dart';
 import 'package:giftbox/services/repositories/firebase_auth_repository.dart';
 
-import '../services/navigation/navigation_service.dart';
-
 class ProfileViewModel with ChangeNotifier {
   final FirebaseAuthRepository _authRepository;
-  final NavigationService _navigationService;
 
-  ProfileViewModel(this._authRepository, this._navigationService);
+  ProfileViewModel(this._authRepository);
 
   bool _isLoading = false;
   String? _userName;
   String? _userEmail;
   String? _userPhoto;
+  String _userId = '';
+
+  String? get userId => _userId;
 
   bool get isLoading => _isLoading;
 
@@ -32,6 +32,7 @@ class ProfileViewModel with ChangeNotifier {
     final user = _authRepository.currentUser;
 
     if (user != null) {
+      _userId = user.uid;
       _userName = user.displayName ?? 'Kullanıcı Adı Yok';
       _userEmail = user.email ?? 'Email Yok';
       _userPhoto =

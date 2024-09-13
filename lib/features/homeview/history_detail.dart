@@ -1,5 +1,47 @@
 import 'package:flutter/material.dart';
 
+class HistoryDetailScreen extends StatelessWidget {
+  final String userMessage;
+  final String chatGptResponse;
+
+  const HistoryDetailScreen({
+    Key? key,
+    required this.userMessage,
+    required this.chatGptResponse,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Mesaj Detayları'),
+      ),
+      body: SingleChildScrollView(
+        // Kaydırılabilir alan
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Kullanıcı Mesajı:',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            const SizedBox(height: 10),
+            UserMessage(message: userMessage), // Kullanıcı mesajını göster
+            const SizedBox(height: 20),
+            const Text(
+              'ChatGPT Yanıtı:',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            const SizedBox(height: 10),
+            AiMessage(message: chatGptResponse), // ChatGPT yanıtını göster
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class AiMessage extends StatelessWidget {
   final String message;
 
@@ -50,6 +92,8 @@ class UserMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       padding: const EdgeInsets.all(12),

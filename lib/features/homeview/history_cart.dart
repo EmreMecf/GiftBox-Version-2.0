@@ -1,60 +1,66 @@
 import 'package:flutter/material.dart';
-import 'package:giftbox/viewmodel/index.dart';
+import 'package:giftbox/viewmodel/history_view_model.dart';
 import 'package:provider/provider.dart';
 
-class HistoryCart extends StatelessWidget {
-  const HistoryCart({super.key});
+class HistoryCard extends StatefulWidget {
+  final String userId; // Kullanıcının ID'si bu widget'a geçilecek.
+
+  const HistoryCard({Key? key, required this.userId}) : super(key: key);
+
+  @override
+  _HistoryCardState createState() => _HistoryCardState();
+}
+
+class _HistoryCardState extends State<HistoryCard> {
+  @override
+  void initState() {
+    super.initState();
+
+    // Firestore'dan verileri almak için kullanıcı ID'si ile fetchHistory çağrısı yapılır.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final historyViewModel = context.read<HistoryViewModel>();
+      historyViewModel
+          .fetchHistory(widget.userId); // userId widget üzerinden alınıyor.
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final historyItems = Provider.of<HistoryViewModel>(context).historyItems;
-    Map<String, List<Map<String, String>>> categorizedHistory = {
-      'Bugün': [],
-      'Dün': [],
-      'Son 7 gün': [],
-      'Son 30 gün': []
-    };
+    return Consumer<HistoryViewModel>(
+      builder: (context, viewModel, child) {
+        if (viewModel.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-    historyItems.forEach((item) {
-      categorizedHistory[item['date']]!.add(item);
-    });
+        if (viewModel.historyList.isEmpty) {
+          return const Center(child: Text('Henüz mesaj geçmişiniz yok.'));
+        }
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildHistorySection('Bugün', categorizedHistory['Bugün']!),
-          _buildHistorySection('Dün', categorizedHistory['Dün']!),
-          _buildHistorySection('Son 7 gün', categorizedHistory['Son 7 gün']!),
-          _buildHistorySection('Son 30 gün', categorizedHistory['Son 30 gün']!),
-        ],
-      ),
-    );
-  }
+        return ListView.builder(
+          padding: const EdgeInsets.all(8.0),
+          itemCount: viewModel.historyList.length,
+          itemBuilder: (context, index) {
+            final message = viewModel.historyList[index];
 
-  Widget _buildHistorySection(String title, List<Map<String, String>> items) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title,
-              style:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          ...items.map((item) {
             return Card(
+              margin: const EdgeInsets.symmetric(vertical: 8.0),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              elevation: 2,
               child: ListTile(
-                title: Text(item['title']!),
-                trailing: const Icon(Icons.more_vert),
+                title: Text(
+                  message.title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  // Mesaj tıklama işlemleri buraya eklenebilir.
+                },
               ),
             );
-          }).toList(),
-        ],
-      ),
+          },
+        );
+      },
     );
   }
 }

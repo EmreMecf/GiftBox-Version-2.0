@@ -15,16 +15,25 @@ class CalendarList extends StatelessWidget {
         itemCount: calendarViewModel.birthdays.length,
         itemBuilder: (context, index) {
           final birthday = calendarViewModel.birthdays[index];
-          return ListTile(
-            title: Text(birthday.name),
-            subtitle: Text(
-              birthday.date.toLocal().toString().split(' ')[0],
-            ),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () {
-                calendarViewModel.removeBirthday(birthday);
-              },
+          return Card(
+            margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+            child: ListTile(
+              title: Text(
+                birthday.name,
+                style: TextStyle(
+                    color: Theme.of(context).textTheme.bodyLarge?.color),
+              ),
+              subtitle: Text(
+                birthday.date.toLocal().toString().split(' ')[0],
+                style: TextStyle(
+                    color: Theme.of(context).textTheme.bodyMedium?.color),
+              ),
+              trailing: IconButton(
+                icon: const Icon(Icons.delete, color: Colors.red),
+                onPressed: () {
+                  calendarViewModel.removeBirthday(birthday);
+                },
+              ),
             ),
           );
         },

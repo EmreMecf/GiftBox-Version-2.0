@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:giftbox/services/apis/index.dart';
 import 'package:giftbox/services/firebase/index.dart';
+import 'package:giftbox/services/repositories/firebase_firestore_repository.dart';
 import 'package:giftbox/services/repositories/index.dart';
 import 'package:giftbox/viewmodel/index.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -42,8 +43,12 @@ Future initInjector() async {
   injector.registerFactory<ChatGptApiClient>(
       () => ChatGptApiClient(injector(instanceName: "ChatGPTDio")));
   injector.registerFactory<FirebaseAuthService>(() => FirebaseAuthService());
+  injector.registerFactory<FirebaseFirestoreService>(
+      () => FirebaseFirestoreService());
 
   //Repositories
+  injector.registerFactory<FirebaseFirestoreRepository>(
+      () => FirebaseFirestoreRepository(injector()));
   injector
       .registerFactory<ChatGptRepository>(() => ChatGptRepository(injector()));
   injector.registerFactory<FirebaseAuthRepository>(
@@ -55,11 +60,12 @@ Future initInjector() async {
   injector.registerFactory<SignOutViewModel>(
       () => SignOutViewModel(injector(), injector()));
   injector.registerFactory<MessagesViewModel>(() => MessagesViewModel());
-  injector.registerFactory<HistoryViewModel>(() => HistoryViewModel());
+  injector
+      .registerFactory<HistoryViewModel>(() => HistoryViewModel(injector()));
   injector
       .registerFactory<SendMessagesViewModel>(() => SendMessagesViewModel());
-  injector.registerFactory<ProfileViewModel>(
-      () => ProfileViewModel(injector(), injector()));
+  injector
+      .registerFactory<ProfileViewModel>(() => ProfileViewModel(injector()));
   injector.registerFactory<HomeViewModel>(() => HomeViewModel(injector()));
   injector.registerFactory<ProfileRouteViewModel>(
       () => ProfileRouteViewModel(injector()));
@@ -78,5 +84,6 @@ Future initInjector() async {
   injector.registerFactory<NavBarRoute>(() => NavBarRoute(injector()));
   injector.registerFactory<CategorySelectionViewModel>(
       () => CategorySelectionViewModel());
-  injector.registerFactory<ChatBotViewModel>(() => ChatBotViewModel());
+  injector.registerFactory<ChatBotViewModel>(
+      () => ChatBotViewModel(injector(), injector(), injector()));
 }

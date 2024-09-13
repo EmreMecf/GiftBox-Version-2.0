@@ -8,6 +8,8 @@ class FirebaseAuthRepository {
 
   User? get currentUser => firebaseAuthService.currentUser;
 
+  String? get currentUserId => firebaseAuthService.currentUser?.uid;
+
   FirebaseAuthRepository(this.firebaseAuthService);
 
   Future<Result<void, Exception>> signInWithGoogle() async {

@@ -3,6 +3,7 @@ import 'package:giftbox/screens/feed_back_screen.dart';
 import 'package:giftbox/services/repositories/index.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/homeview/history_detail.dart';
 import '../../screens/index.dart';
 
 class NavigationService {
@@ -62,6 +63,24 @@ class NavigationService {
                 builder: (BuildContext context, GoRouterState state) {
                   return const CalendarScreen();
                 }),
+            GoRoute(
+              path: 'historydetail',
+              builder: (BuildContext context, GoRouterState state) {
+                final args = state.extra
+                    as Map<String, dynamic>?; // Geçilen parametreleri al
+                final userMessage = args?['userMessage'] ?? 'Mesaj yok';
+                final chatGptResponse = args?['chatGptResponse'] ?? 'Yanıt yok';
+
+                // VERİLERİN KONTROLÜ
+                print(
+                    'UserMessage: $userMessage, ChatGPTResponse: $chatGptResponse');
+
+                return HistoryDetailScreen(
+                  userMessage: userMessage,
+                  chatGptResponse: chatGptResponse,
+                );
+              },
+            )
           ],
         ),
       ],
@@ -98,5 +117,12 @@ class NavigationService {
 
   void goCalendar() {
     _router.go('/calendar');
+  }
+
+  void goHistoryDetail(String userMessage, String chatGptResponse) {
+    _router.go('/historydetail', extra: {
+      'userMessage': userMessage,
+      'chatGptResponse': chatGptResponse,
+    });
   }
 }
