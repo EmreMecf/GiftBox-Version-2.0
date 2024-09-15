@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giftbox/viewmodel/history_detail_navigation_view_model.dart';
 import 'package:giftbox/viewmodel/history_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +27,8 @@ class _HistoryCardState extends State<HistoryCard> {
 
   @override
   Widget build(BuildContext context) {
+    final historyDetailNavigationViewModel =
+        context.read<HistoryDetailNavigationViewModel>();
     return Consumer<HistoryViewModel>(
       builder: (context, viewModel, child) {
         if (viewModel.isLoading) {
@@ -54,7 +57,8 @@ class _HistoryCardState extends State<HistoryCard> {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
-                  // Mesaj tıklama işlemleri buraya eklenebilir.
+                  historyDetailNavigationViewModel.goToHistoryDetail(
+                      message.userMessage, message.chatGptResponse);
                 },
               ),
             );

@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:giftbox/core/configs/font.dart';
 import 'package:giftbox/services/injector.dart';
 import 'package:giftbox/services/navigation/index.dart';
+import 'package:giftbox/viewmodel/history_detail_navigation_view_model.dart';
 import 'package:giftbox/viewmodel/index.dart';
 import 'package:provider/provider.dart';
 
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (_) => injector<ProfileViewModel>()..loadUserData()),
         Provider(create: (_) => injector<HomeViewModel>()),
+        Provider(create: (_) => injector<HistoryDetailNavigationViewModel>()),
         Provider(create: (_) => injector<ProfileRouteViewModel>()),
         Provider(create: (_) => injector<SettingsViewModel>()),
         Provider(create: (_) => injector<NavBarRoute>()),

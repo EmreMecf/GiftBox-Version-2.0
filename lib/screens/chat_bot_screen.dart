@@ -63,9 +63,18 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 8.0, horizontal: 12.0),
-                  child: message.userId == chatBotViewModel.userId
-                      ? UserMessage(message: message.userMessage)
-                      : AiMessage(message: message.chatGptResponse),
+                  child: Column(
+                    crossAxisAlignment:
+                        message.userId == chatBotViewModel.userId
+                            ? CrossAxisAlignment.end
+                            : CrossAxisAlignment.start,
+                    children: [
+                      if (message.userMessage.isNotEmpty)
+                        UserMessage(message: message.userMessage),
+                      if (message.chatGptResponse.isNotEmpty)
+                        AiMessage(message: message.chatGptResponse),
+                    ],
+                  ),
                 );
               },
             );

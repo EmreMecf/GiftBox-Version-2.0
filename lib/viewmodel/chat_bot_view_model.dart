@@ -22,7 +22,7 @@ class ChatBotViewModel with ChangeNotifier {
 
   String? _userId;
 
-  List<HistoryModel> _messageHistory = []; // Mesajlar listesi
+  List<HistoryModel> _messageHistory = [];
 
   List<HistoryModel> get messageHistory => _messageHistory; // Getter
 

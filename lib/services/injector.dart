@@ -6,6 +6,7 @@ import 'package:giftbox/services/apis/index.dart';
 import 'package:giftbox/services/firebase/index.dart';
 import 'package:giftbox/services/repositories/firebase_firestore_repository.dart';
 import 'package:giftbox/services/repositories/index.dart';
+import 'package:giftbox/viewmodel/history_detail_navigation_view_model.dart';
 import 'package:giftbox/viewmodel/index.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -67,6 +68,8 @@ Future initInjector() async {
   injector
       .registerFactory<ProfileViewModel>(() => ProfileViewModel(injector()));
   injector.registerFactory<HomeViewModel>(() => HomeViewModel(injector()));
+  injector.registerFactory<HistoryDetailNavigationViewModel>(
+      () => HistoryDetailNavigationViewModel(injector()));
   injector.registerFactory<ProfileRouteViewModel>(
       () => ProfileRouteViewModel(injector()));
   injector.registerFactory<ProfileEditViewModel>(
