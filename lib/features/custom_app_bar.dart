@@ -20,9 +20,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               onTap: () {
                 homeViewModel.goToProfile();
               },
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 radius: 20,
-                backgroundImage: AssetImage('lib/assets/user.png'),
+                backgroundImage: profileViewModel.userPhoto != null
+                    ? NetworkImage(profileViewModel.userPhoto!)
+                    : const AssetImage('lib/assets/user.png') as ImageProvider,
               ),
             ),
             const SizedBox(width: 16),

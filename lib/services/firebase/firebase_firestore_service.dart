@@ -82,4 +82,19 @@ class FirebaseFirestoreService {
       print('Mesaj güncellenirken hata: $e');
     }
   }
+
+  Future<void> saveProfileImageUrl(String userId, String imageUrl) async {
+    try {
+      await _firestore.collection('users').doc(userId).update({
+        'profileImageUrl': imageUrl,
+      });
+      print('Resim URL\'si başarıyla güncellendi.');
+    } catch (e) {
+      print('Resim URL\'si güncellenirken hata: $e');
+    }
+  }
+
+  Stream<DocumentSnapshot> getUserProfile(String userId) {
+    return _firestore.collection('users').doc(userId).snapshots();
+  }
 }

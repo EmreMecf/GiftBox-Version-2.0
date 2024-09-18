@@ -60,6 +60,9 @@ dependencies:
   backdrop: ^0.9.1
   sliding_up_panel: ^2.0.0+1
   cloud_firestore: ^4.5.1
+  image_picker: ^1.0.7
+  permission_handler: ^11.0.1
+  flutter_image_compress: ^2.3.0
 
 
 

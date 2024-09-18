@@ -49,6 +49,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => injector<ProfileEditViewModel>()),
         ChangeNotifierProvider(
             create: (_) => injector<UpdateProfileViewModel>()),
+        ChangeNotifierProvider(
+            create: (_) => injector<UpdateProfileImageViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<LanguageViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<FeedbackViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<ErrorViewModel>()),

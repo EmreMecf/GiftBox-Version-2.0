@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:giftbox/services/apis/index.dart';
 import 'package:giftbox/services/firebase/index.dart';
 import 'package:giftbox/services/repositories/firebase_firestore_repository.dart';
+import 'package:giftbox/services/repositories/firebasee_storage_repository.dart';
 import 'package:giftbox/services/repositories/index.dart';
 import 'package:giftbox/viewmodel/history_detail_navigation_view_model.dart';
 import 'package:giftbox/viewmodel/index.dart';
@@ -46,6 +47,8 @@ Future initInjector() async {
   injector.registerFactory<FirebaseAuthService>(() => FirebaseAuthService());
   injector.registerFactory<FirebaseFirestoreService>(
       () => FirebaseFirestoreService());
+  injector
+      .registerFactory<FirebaseStorageService>(() => FirebaseStorageService());
 
   //Repositories
   injector.registerFactory<FirebaseFirestoreRepository>(
@@ -54,6 +57,8 @@ Future initInjector() async {
       .registerFactory<ChatGptRepository>(() => ChatGptRepository(injector()));
   injector.registerFactory<FirebaseAuthRepository>(
       () => FirebaseAuthRepository(injector()));
+  injector.registerFactory<FirebaseStorageRepository>(
+      () => FirebaseStorageRepository(injector()));
 
   //ViewModel
   injector.registerFactory<SignInViewModel>(
@@ -76,6 +81,8 @@ Future initInjector() async {
       () => ProfileEditViewModel(injector()));
   injector.registerFactory<UpdateProfileViewModel>(
       () => UpdateProfileViewModel(injector(), injector(), injector()));
+  injector.registerFactory<UpdateProfileImageViewModel>(
+      () => UpdateProfileImageViewModel(injector(), injector()));
   injector.registerFactory<LanguageViewModel>(() => LanguageViewModel());
   injector
       .registerFactory<FeedbackViewModel>(() => FeedbackViewModel(injector()));

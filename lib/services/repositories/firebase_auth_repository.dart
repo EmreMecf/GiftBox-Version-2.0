@@ -38,4 +38,16 @@ class FirebaseAuthRepository {
       return Failure(e);
     }
   }
+
+  Future<Result<void, Exception>> updateProfileImage(String imageUrl) async {
+    try {
+      // Kullanıcının profiline yeni profil fotoğrafı ekle
+      await firebaseAuthService.currentUser?.updatePhotoURL(imageUrl);
+      await firebaseAuthService.currentUser
+          ?.reload(); // Firebase'deki bilgileri yeniden yükle
+      return const Success(null);
+    } on Exception catch (e) {
+      return Failure(e);
+    }
+  }
 }
