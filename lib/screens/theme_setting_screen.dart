@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../features/index.dart';
 import '../features/themesettings/index.dart';
@@ -23,7 +24,8 @@ class _ThemeSettingScreenState extends State<ThemeSettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Theme Ayarları'),
+        title: Text(
+            AppLocalizations.of(context)!.thema_setting_screen_app_bar_label),
       ),
       body: const Padding(
         padding: EdgeInsets.all(16.0),

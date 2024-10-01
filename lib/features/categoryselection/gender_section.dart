@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GenderSection extends StatelessWidget {
   final String gender;
@@ -23,8 +24,8 @@ class GenderSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Cinsiyet',
-                style: theme.textTheme.headline6
+            Text(AppLocalizations.of(context)!.category_gender_heading,
+                style: theme.textTheme.titleLarge
                     ?.copyWith(fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             Row(
@@ -32,16 +33,20 @@ class GenderSection extends StatelessWidget {
               children: [
                 Expanded(
                   child: RadioListTile<String>(
-                    title: const Text('Erkek'),
-                    value: 'Erkek',
+                    title: Text(AppLocalizations.of(context)!
+                        .category_gender_erkek_label),
+                    value: AppLocalizations.of(context)!
+                        .category_gender_erkek_value,
                     groupValue: gender,
                     onChanged: onChanged,
                   ),
                 ),
                 Expanded(
                   child: RadioListTile<String>(
-                    title: const Text('Kadın'),
-                    value: 'Kadın',
+                    title: Text(AppLocalizations.of(context)!
+                        .category_gender_kadin_label),
+                    value: AppLocalizations.of(context)!
+                        .category_gender_kadin_value,
                     groupValue: gender,
                     onChanged: onChanged,
                   ),
@@ -54,16 +59,20 @@ class GenderSection extends StatelessWidget {
               children: [
                 Expanded(
                   child: RadioListTile<String>(
-                    title: const Text('Çocuk'),
-                    value: 'Çocuk',
+                    title: Text(AppLocalizations.of(context)!
+                        .category_gender_cocuk_label),
+                    value: AppLocalizations.of(context)!
+                        .category_gender_cocuk_value,
                     groupValue: gender,
                     onChanged: onChanged,
                   ),
                 ),
                 Expanded(
                   child: RadioListTile<String>(
-                    title: const Text('Diger'),
-                    value: 'Diger',
+                    title: Text(AppLocalizations.of(context)!
+                        .category_gender_diger_label),
+                    value: AppLocalizations.of(context)!
+                        .category_gender_diger_value,
                     groupValue: gender,
                     onChanged: onChanged,
                   ),

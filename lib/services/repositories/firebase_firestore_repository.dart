@@ -1,34 +1,72 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../firebase/index.dart';
 import '../models/firestore/index.dart';
+import '../models/index.dart';
 
 class FirebaseFirestoreRepository {
   final FirebaseFirestoreService _firestoreService;
 
   FirebaseFirestoreRepository(this._firestoreService);
 
-  Future<void> saveHistory(HistoryModel history) async {
-    return await _firestoreService.saveHistory(history);
+  /// History kaydını Firestore'a kaydetme
+  Future<Result<void, Exception>> saveHistory(HistoryModel history) async {
+    try {
+      await _firestoreService.saveHistory(history);
+      return const Success(null); // Başarılı sonuç
+    } catch (e) {
+      return Failure(Exception('History kaydedilemedi: $e')); // Hata sonucu
+    }
   }
 
-  // Tek bir history kaydı almak için stream
-  Stream<DocumentSnapshot<Map<String, dynamic>>> getHistory(String messageId) {
-    return _firestoreService.getHistoryStream(historyId: messageId);
+  Stream<Result<HistoryModel, Exception>> getLastMessage(String userId) {
+    return _firestoreService.getLastMessage(userId).map((snapshot) {
+      if (snapshot != null && snapshot.exists) {
+        try {
+          final history = HistoryModel.fromJson(snapshot.data()!);
+          return Success(history); // Başarılı sonuç
+        } catch (e) {
+          return Failure(Exception('Veri dönüştürme hatası: $e'));
+        }
+      } else {
+        // Eğer snapshot boş ise, bir Failure sonucu döndürelim
+        return Failure(Exception('Son mesaj bulunamadı.'));
+      }
+    });
   }
 
-  // Belirli bir kullanıcıya ait tüm history kayıtlarını almak için stream
-  Stream<List<HistoryModel>> getHistoryList(String userId) {
-    return _firestoreService.getHistoryList(userId);
+  /// Kullanıcıya ait tüm history kayıtlarını almak için stream
+  Stream<Result<List<HistoryModel>, Exception>> getHistoryList(String userId) {
+    return _firestoreService.getHistoryList(userId).map((querySnapshot) {
+      try {
+        final historyList = querySnapshot.docs.map((doc) {
+          return HistoryModel.fromJson(doc.data() as Map<String, dynamic>);
+        }).toList();
+
+        return Success(historyList); // Başarılı sonuç
+      } catch (e) {
+        return Failure(Exception('History listesi alınamadı: $e'));
+      }
+    });
   }
 
-  // Mesajı silme fonksiyonu
-  Future<void> deleteHistoryMessage(String messageId) async {
-    await _firestoreService.deleteMessage(messageId);
+  /// Mesajı silme fonksiyonu
+  Future<Result<void, Exception>> deleteHistoryMessage(String messageId) async {
+    try {
+      await _firestoreService.deleteMessage(messageId);
+      return const Success(null); // Başarılı sonuç
+    } catch (e) {
+      return Failure(Exception('Mesaj silinemedi: $e')); // Hata sonucu
+    }
   }
 
-  // Mesaj başlığını güncelleme fonksiyonu
-  Future<void> updateMessageTitle(String messageId, String newTitle) async {
-    await _firestoreService.updateMessageTitle(messageId, newTitle);
+  /// Mesaj başlığını güncelleme fonksiyonu
+  Future<Result<void, Exception>> updateMessageTitle(
+      String messageId, String newTitle) async {
+    try {
+      await _firestoreService.updateMessageTitle(messageId, newTitle);
+      return const Success(null); // Başarılı sonuç
+    } catch (e) {
+      return Failure(
+          Exception('Mesaj başlığı güncellenemedi: $e')); // Hata sonucu
+    }
   }
 }

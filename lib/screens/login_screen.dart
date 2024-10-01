@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:giftbox/viewmodel/index.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +10,9 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final signInViewModel = context.watch<SignInViewModel>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
+      appBar: AppBar(
+          title:
+              Text(AppLocalizations.of(context)!.login_screen_app_bar_label)),
       body: Consumer<SignInViewModel>(
         builder: (context, viewModel, child) {
           return Padding(

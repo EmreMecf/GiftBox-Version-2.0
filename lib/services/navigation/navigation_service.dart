@@ -22,6 +22,7 @@ class NavigationService {
         GoRoute(
           path: '/',
           builder: (BuildContext context, GoRouterState state) {
+            print('Current user: ${_firebaseAuthRepository.currentUser}');
             return _firebaseAuthRepository.currentUser != null
                 ? const HomeScreen()
                 : const LoginScreen();
@@ -30,7 +31,7 @@ class NavigationService {
             GoRoute(
               path: 'chatbot',
               builder: (BuildContext context, GoRouterState state) {
-                return ChatBotScreen();
+                return const ChatBotScreen();
               },
             ),
             GoRoute(

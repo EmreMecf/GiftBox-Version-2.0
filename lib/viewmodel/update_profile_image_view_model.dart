@@ -28,9 +28,11 @@ class UpdateProfileImageViewModel with ChangeNotifier {
   // Resmi sıkıştırmak için fonksiyon
   Future<File?> compressImage(File file) async {
     final dir = await getTemporaryDirectory();
+
     final targetPath =
         '${dir.path}/${DateTime.now().millisecondsSinceEpoch}_compressed.jpg';
 
+    // Resmi sıkıştırma işlemi
     var result = await FlutterImageCompress.compressAndGetFile(
       file.absolute.path,
       targetPath,
@@ -39,7 +41,11 @@ class UpdateProfileImageViewModel with ChangeNotifier {
       minHeight: 800,
     );
 
-    return result;
+    if (result != null) {
+      return File(result.path);
+    }
+
+    return null;
   }
 
   // İzinleri kontrol etme ve galeriden resim seçme işlemi

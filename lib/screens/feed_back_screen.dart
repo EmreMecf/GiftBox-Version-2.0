@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../features/feedback/index.dart';
 import '../features/index.dart';
@@ -23,7 +24,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Geri Bildirim'),
+        title:
+            Text(AppLocalizations.of(context)!.feedback_screen_app_bar_label),
       ),
       body: const Padding(
         padding: EdgeInsets.all(20.0),

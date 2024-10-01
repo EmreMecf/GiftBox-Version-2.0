@@ -1,5 +1,8 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
-import 'package:giftbox/services/repositories/firebase_firestore_repository.dart';
+import 'package:giftbox/core/utils/snackbar_helper.dart';
+
+import '../services/repositories/index.dart';
 
 class HistoryDeleteViewModel with ChangeNotifier {
   final FirebaseFirestoreRepository _firebaseFirestoreRepository;
@@ -10,11 +13,28 @@ class HistoryDeleteViewModel with ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  Future<void> deleteMessage(String messageId) async {
+  Future<void> deleteMessage(BuildContext context, String messageId) async {
     _isLoading = true;
     notifyListeners();
 
-    await _firebaseFirestoreRepository.deleteHistoryMessage(messageId);
+    try {
+      await _firebaseFirestoreRepository.deleteHistoryMessage(messageId);
+      // Silme işlemi başarılıysa Snackbar göster
+      SnackbarHelper.showAwesomeSnackbar(
+        context,
+        title: "Başarılı!",
+        message: "Mesaj başarıyla silindi.",
+        contentType: ContentType.success,
+      );
+    } catch (e) {
+      // Hata durumunda hata mesajı gösterebiliriz
+      SnackbarHelper.showAwesomeSnackbar(
+        context,
+        title: "Hata!",
+        message: "Mesaj silinirken bir hata oluştu.",
+        contentType: ContentType.failure,
+      );
+    }
 
     _isLoading = false;
     notifyListeners();

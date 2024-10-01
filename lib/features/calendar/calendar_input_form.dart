@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../viewmodel/index.dart';
@@ -16,7 +17,7 @@ class CalendarInputForm extends StatelessWidget {
       child: TextField(
         controller: nameController,
         decoration: InputDecoration(
-          labelText: 'Name',
+          labelText: AppLocalizations.of(context)!.calender_input_form_label,
           border: OutlineInputBorder(),
           suffixIcon: IconButton(
             icon: const Icon(Icons.add),

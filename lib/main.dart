@@ -2,9 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:giftbox/core/configs/font.dart';
+import 'package:giftbox/services/firebase/index.dart';
 import 'package:giftbox/services/injector.dart';
 import 'package:giftbox/services/navigation/index.dart';
+import 'package:giftbox/services/repositories/index.dart';
 import 'package:giftbox/viewmodel/history_detail_navigation_view_model.dart';
 import 'package:giftbox/viewmodel/index.dart';
 import 'package:provider/provider.dart';
@@ -33,14 +36,19 @@ class MyApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-            create: (_) => injector<SendMessagesViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<HistoryViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<MessagesViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<SignInViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<SignOutViewModel>()),
         ChangeNotifierProvider(
             create: (_) => injector<ProfileViewModel>()..loadUserData()),
+        Provider<FirebaseFirestoreService>(
+          create: (_) => FirebaseFirestoreService(),
+        ),
+        ProxyProvider<FirebaseFirestoreService, FirebaseFirestoreRepository>(
+          update: (_, firebaseService, __) =>
+              FirebaseFirestoreRepository(firebaseService),
+        ),
         Provider(create: (_) => injector<HomeViewModel>()),
         Provider(create: (_) => injector<HistoryDetailNavigationViewModel>()),
         Provider(create: (_) => injector<ProfileRouteViewModel>()),
@@ -50,6 +58,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (_) => injector<UpdateProfileViewModel>()),
         ChangeNotifierProvider(
+            create: (_) => injector<HistoryDeleteViewModel>()),
+        ChangeNotifierProvider(
             create: (_) => injector<UpdateProfileImageViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<LanguageViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<FeedbackViewModel>()),
@@ -58,7 +68,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => injector<CalendarViewModel>()),
         ChangeNotifierProvider(
             create: (_) => injector<CategorySelectionViewModel>()),
-        ChangeNotifierProvider(create: (_) => injector<ChatBotViewModel>()),
+        ChangeNotifierProvider(
+            create: (_) => injector<ChatBotViewModel>()..fetchLastMessage()),
       ],
       child: Consumer<ThemeViewModel>(
         builder: (context, themeViewModel, child) {
@@ -69,9 +80,16 @@ class MyApp extends StatelessWidget {
                 child: MaterialApp.router(
                   debugShowCheckedModeBanner: false,
                   routerConfig: injector<NavigationService>().router,
-                  localizationsDelegates:
-                      AppLocalizations.localizationsDelegates,
-                  supportedLocales: AppLocalizations.supportedLocales,
+                  localizationsDelegates: const [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: const [
+                    Locale('en', ''),
+                    Locale('tr', ''),
+                  ],
                   theme: theme.light(),
                   darkTheme: theme.dark(),
                   themeMode: themeViewModel.themeMode,

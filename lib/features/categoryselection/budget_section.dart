@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BudgetSection extends StatefulWidget {
   final String? minBudget;
@@ -48,7 +49,8 @@ class _BudgetSectionState extends State<BudgetSection> {
       if (_minBudgetController.text.isNotEmpty) {
         final minValue = double.tryParse(_minBudgetController.text);
         if (minValue == null || minValue < 0) {
-          _minError = 'Geçerli bir minimum bütçe girin.';
+          _minError =
+              AppLocalizations.of(context)!.category_budget_min_error_label;
         } else {
           widget.onMinBudgetChanged(_minBudgetController.text);
         }
@@ -58,7 +60,8 @@ class _BudgetSectionState extends State<BudgetSection> {
       if (_maxBudgetController.text.isNotEmpty) {
         final maxValue = double.tryParse(_maxBudgetController.text);
         if (maxValue == null || maxValue < 0) {
-          _maxError = 'Geçerli bir maksimum bütçe girin.';
+          _maxError =
+              AppLocalizations.of(context)!.category_budget_max_error_label;
         } else {
           widget.onMaxBudgetChanged(_maxBudgetController.text);
         }
@@ -77,7 +80,7 @@ class _BudgetSectionState extends State<BudgetSection> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Bütçe',
+            Text(AppLocalizations.of(context)!.category_budget_heading,
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
             const SizedBox(height: 10),
             Row(
@@ -86,7 +89,8 @@ class _BudgetSectionState extends State<BudgetSection> {
                   child: TextField(
                     controller: _minBudgetController,
                     decoration: InputDecoration(
-                      labelText: 'Min',
+                      labelText: AppLocalizations.of(context)!
+                          .category_budget_min_label,
                       border: const OutlineInputBorder(),
                       filled: true,
                       fillColor: Colors.grey[100],
@@ -106,7 +110,8 @@ class _BudgetSectionState extends State<BudgetSection> {
                   child: TextField(
                     controller: _maxBudgetController,
                     decoration: InputDecoration(
-                      labelText: 'Max',
+                      labelText: AppLocalizations.of(context)!
+                          .category_budget_max_label,
                       border: const OutlineInputBorder(),
                       filled: true,
                       fillColor: Colors.grey[100],

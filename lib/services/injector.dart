@@ -4,8 +4,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:giftbox/services/apis/index.dart';
 import 'package:giftbox/services/firebase/index.dart';
-import 'package:giftbox/services/repositories/firebase_firestore_repository.dart';
-import 'package:giftbox/services/repositories/firebasee_storage_repository.dart';
 import 'package:giftbox/services/repositories/index.dart';
 import 'package:giftbox/viewmodel/history_detail_navigation_view_model.dart';
 import 'package:giftbox/viewmodel/index.dart';
@@ -69,8 +67,6 @@ Future initInjector() async {
   injector
       .registerFactory<HistoryViewModel>(() => HistoryViewModel(injector()));
   injector
-      .registerFactory<SendMessagesViewModel>(() => SendMessagesViewModel());
-  injector
       .registerFactory<ProfileViewModel>(() => ProfileViewModel(injector()));
   injector.registerFactory<HomeViewModel>(() => HomeViewModel(injector()));
   injector.registerFactory<HistoryDetailNavigationViewModel>(
@@ -87,6 +83,8 @@ Future initInjector() async {
   injector
       .registerFactory<FeedbackViewModel>(() => FeedbackViewModel(injector()));
   injector.registerFactory<ErrorViewModel>(() => ErrorViewModel());
+  injector.registerFactory<HistoryDeleteViewModel>(
+      () => HistoryDeleteViewModel(injector()));
   injector
       .registerFactory<SettingsViewModel>(() => SettingsViewModel(injector()));
   injector.registerLazySingleton<ThemeViewModel>(() => ThemeViewModel());

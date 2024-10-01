@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../services/models/network/result.dart';
@@ -35,8 +36,20 @@ class SignInViewModel with ChangeNotifier {
 
     if (result is Success) {
       _errorMessage = null;
+      await FirebaseAuth.instance.currentUser?.reload();
+      final user = FirebaseAuth.instance.currentUser;
+
+      // Firebase'in kullanıcı durumunu güncellemesi için kısa bir gecikme ekleyin
+      await Future.delayed(const Duration(seconds: 2));
+
+      if (_authRepository.currentUser != null) {
+        print('Navigating to home...');
+        _navigationService.goHome();
+      } else {
+        print('User is still null after delay.');
+      }
+
       setLoading = false;
-      _navigationService.goHome();
     } else if (result is Failure) {
       _errorMessage = 'Hata Google Services: ${result.exception}';
       setLoading = false;

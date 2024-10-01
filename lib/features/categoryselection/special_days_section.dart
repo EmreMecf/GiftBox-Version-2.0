@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SpecialDaysSection extends StatelessWidget {
   final String specialDay;
@@ -24,8 +25,8 @@ class SpecialDaysSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Özel Günler',
-              style: theme.textTheme.headline6
+              AppLocalizations.of(context)!.category_special_days_heading,
+              style: theme.textTheme.titleLarge
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
@@ -33,12 +34,17 @@ class SpecialDaysSection extends StatelessWidget {
               spacing: 8, // Butonlar arasındaki yatay boşluk
               children: [
                 ElevatedButton(
-                  onPressed: () => onChanged('Anneler Günü'),
+                  onPressed: () => onChanged(AppLocalizations.of(context)!
+                      .category_special_days_anneler_gunu),
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: specialDay == 'Anneler Günü'
+                    foregroundColor: specialDay ==
+                            AppLocalizations.of(context)!
+                                .category_special_days_anneler_gunu
                         ? Colors.white
                         : theme.primaryColor,
-                    backgroundColor: specialDay == 'Anneler Günü'
+                    backgroundColor: specialDay ==
+                            AppLocalizations.of(context)!
+                                .category_special_days_anneler_gunu
                         ? theme.primaryColor
                         : Colors.grey[200],
                     shape: RoundedRectangleBorder(
@@ -47,15 +53,21 @@ class SpecialDaysSection extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
                   ),
-                  child: const Text('Anneler Günü'),
+                  child: Text(AppLocalizations.of(context)!
+                      .category_special_days_anneler_gunu),
                 ),
                 ElevatedButton(
-                  onPressed: () => onChanged('Babalar Günü'),
+                  onPressed: () => onChanged(AppLocalizations.of(context)!
+                      .category_special_days_babalar_gunu),
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: specialDay == 'Babalar Günü'
+                    foregroundColor: specialDay ==
+                            AppLocalizations.of(context)!
+                                .category_special_days_babalar_gunu
                         ? Colors.white
                         : theme.primaryColor,
-                    backgroundColor: specialDay == 'Babalar Günü'
+                    backgroundColor: specialDay ==
+                            AppLocalizations.of(context)!
+                                .category_special_days_babalar_gunu
                         ? theme.primaryColor
                         : Colors.grey[200],
                     shape: RoundedRectangleBorder(
@@ -64,15 +76,21 @@ class SpecialDaysSection extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
                   ),
-                  child: const Text('Babalar Günü'),
+                  child: Text(AppLocalizations.of(context)!
+                      .category_special_days_babalar_gunu),
                 ),
                 ElevatedButton(
-                  onPressed: () => onChanged('Doğum Günü'),
+                  onPressed: () => onChanged(AppLocalizations.of(context)!
+                      .category_special_days_dogum_gunu),
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: specialDay == 'Doğum Günü'
+                    foregroundColor: specialDay ==
+                            AppLocalizations.of(context)!
+                                .category_special_days_dogum_gunu
                         ? Colors.white
                         : theme.primaryColor,
-                    backgroundColor: specialDay == 'Doğum Günü'
+                    backgroundColor: specialDay ==
+                            AppLocalizations.of(context)!
+                                .category_special_days_dogum_gunu
                         ? theme.primaryColor
                         : Colors.grey[200],
                     shape: RoundedRectangleBorder(
@@ -81,15 +99,21 @@ class SpecialDaysSection extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
                   ),
-                  child: const Text('Doğum Günü'),
+                  child: Text(AppLocalizations.of(context)!
+                      .category_special_days_dogum_gunu),
                 ),
                 ElevatedButton(
-                  onPressed: () => onChanged('Sevgililer Günü'),
+                  onPressed: () => onChanged(AppLocalizations.of(context)!
+                      .category_special_days_sevililer_gunu),
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: specialDay == 'Sevgililer Günü'
+                    foregroundColor: specialDay ==
+                            AppLocalizations.of(context)!
+                                .category_special_days_sevililer_gunu
                         ? Colors.white
                         : theme.primaryColor,
-                    backgroundColor: specialDay == 'Sevgililer Günü'
+                    backgroundColor: specialDay ==
+                            AppLocalizations.of(context)!
+                                .category_special_days_sevililer_gunu
                         ? theme.primaryColor
                         : Colors.grey[200],
                     shape: RoundedRectangleBorder(
@@ -98,15 +122,21 @@ class SpecialDaysSection extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
                   ),
-                  child: const Text('Sevgililer Günü'),
+                  child: Text(AppLocalizations.of(context)!
+                      .category_special_days_sevililer_gunu),
                 ),
                 ElevatedButton(
-                  onPressed: () => onChanged('Yılbaşı'),
+                  onPressed: () => onChanged(AppLocalizations.of(context)!
+                      .category_special_days_yilbasi),
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: specialDay == 'Yılbaşı'
+                    foregroundColor: specialDay ==
+                            AppLocalizations.of(context)!
+                                .category_special_days_yilbasi
                         ? Colors.white
                         : theme.primaryColor,
-                    backgroundColor: specialDay == 'Yılbaşı'
+                    backgroundColor: specialDay ==
+                            AppLocalizations.of(context)!
+                                .category_special_days_yilbasi
                         ? theme.primaryColor
                         : Colors.grey[200],
                     shape: RoundedRectangleBorder(
@@ -115,7 +145,8 @@ class SpecialDaysSection extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
                   ),
-                  child: const Text('Yılbaşı'),
+                  child: Text(AppLocalizations.of(context)!
+                      .category_special_days_yilbasi),
                 ),
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../features/editprofile/index.dart';
 import '../features/index.dart';
@@ -23,7 +24,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profil Düzenle'),
+        title: Text(AppLocalizations.of(context)!.edit_profile_app_bar_label),
       ),
       body: const SingleChildScrollView(
         padding: EdgeInsets.all(16.0),

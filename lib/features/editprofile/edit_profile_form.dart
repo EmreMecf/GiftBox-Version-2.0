@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../viewmodel/index.dart';
@@ -41,9 +42,9 @@ class _EditProfileFormState extends State<EditProfileForm> {
         children: [
           TextFormField(
             controller: _nameController,
-            decoration: const InputDecoration(
-              labelText: 'İsim & Soyad',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.edit_profile_name_label,
+              border: const OutlineInputBorder(),
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -55,9 +56,10 @@ class _EditProfileFormState extends State<EditProfileForm> {
           const SizedBox(height: 20),
           TextFormField(
             controller: _emailController,
-            decoration: const InputDecoration(
-              labelText: 'E-posta',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText:
+                  AppLocalizations.of(context)!.edit_profile_eposta_label,
+              border: const OutlineInputBorder(),
             ),
             readOnly: true,
           ),
@@ -73,7 +75,8 @@ class _EditProfileFormState extends State<EditProfileForm> {
                   },
             child: updateProfileViewModel.isLoading
                 ? const CircularProgressIndicator()
-                : const Text('SUBMIT'),
+                : Text(
+                    AppLocalizations.of(context)!.edit_profile_submit_button),
           ),
           if (updateProfileViewModel.errorMessage != null)
             Padding(

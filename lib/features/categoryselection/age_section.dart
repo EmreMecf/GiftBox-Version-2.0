@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AgeSection extends StatelessWidget {
   final double age;
@@ -20,8 +21,8 @@ class AgeSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Yaş',
-                style: theme.textTheme.headline6
+            Text(AppLocalizations.of(context)!.category_age_heading,
+                style: theme.textTheme.titleLarge
                     ?.copyWith(fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             Slider(
@@ -35,8 +36,9 @@ class AgeSection extends StatelessWidget {
               inactiveColor: Colors.grey[300],
             ),
             const SizedBox(height: 10),
-            Text('Seçilen Yaş: ${age.round()}',
-                style: theme.textTheme.bodyText1),
+            Text(
+                '${AppLocalizations.of(context)!.category_age_little_title} ${age.round()}',
+                style: theme.textTheme.bodyLarge),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:giftbox/viewmodel/profile_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +37,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final profileViewModel = context.read<ProfileViewModel>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Profil')),
+      appBar: AppBar(
+          title:
+              Text(AppLocalizations.of(context)!.profile_screen_app_bar_label)),
       body: profileViewModel.isLoading
           ? const Center(child: CircularProgressIndicator())
           : const SingleChildScrollView(

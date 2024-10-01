@@ -15,9 +15,11 @@ class FirebaseAuthRepository {
   Future<Result<void, Exception>> signInWithGoogle() async {
     try {
       await firebaseAuthService.signInWithGoogle();
+      // Kullanıcıyı Firebase'den yeniden yükle
+      await firebaseAuthService.currentUser?.reload();
       return const Success(null);
-    } on Exception catch (s, e) {
-      return Failure(e as Exception);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 

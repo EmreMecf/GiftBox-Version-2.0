@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:giftbox/viewmodel/index.dart';
 import 'package:provider/provider.dart';
 
@@ -15,9 +16,9 @@ class EditButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.teal,
       ),
-      child: const Text(
-        "Edit Profile",
-        style: TextStyle(
+      child: Text(
+        AppLocalizations.of(context)!.profile_edit_button,
+        style: const TextStyle(
           color: Colors.white,
         ),
       ),

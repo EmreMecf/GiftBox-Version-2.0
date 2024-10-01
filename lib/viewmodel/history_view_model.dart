@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:giftbox/services/repositories/firebase_firestore_repository.dart';
 
 import '../services/models/firestore/index.dart';
+import '../services/models/index.dart';
+import '../services/repositories/index.dart';
 
 class HistoryViewModel with ChangeNotifier {
   final FirebaseFirestoreRepository _firebaseFirestoreRepository;
@@ -18,20 +19,29 @@ class HistoryViewModel with ChangeNotifier {
 
   // Kullanıcıya ait geçmiş mesajları tek seferlik yükleyen fetch fonksiyonu
   Future<void> fetchHistory(String userId) async {
-    _isLoading = true; // Yükleme durumu true
-    notifyListeners(); // Dinleyicileri bilgilendir
+    _isLoading = true;
+    notifyListeners();
 
     try {
       final stream = _firebaseFirestoreRepository.getHistoryList(userId);
 
-      stream.listen((history) {
-        _historyList = history;
-        _isLoading = false; // Yükleme durumu false
-        notifyListeners(); // Veriler değişti, dinleyicileri bilgilendir
+      stream.listen((result) {
+        // Başarı durumunu kontrol edin
+        if (result is Success<List<HistoryModel>, Exception>) {
+          _historyList =
+              result.value!; // Eğer sonuç başarılıysa, veriyi alıyoruz.
+        }
+        // Hata durumunu kontrol edin
+        else if (result is Failure<List<HistoryModel>, Exception>) {
+          print("Veri çekme hatası: ${result.exception}");
+        }
+
+        _isLoading = false;
+        notifyListeners();
       });
     } catch (error) {
-      _isLoading = false; // Hata durumunda yükleme durumunu kapat
-      notifyListeners(); // Hata durumunda da dinleyicileri bilgilendir
+      _isLoading = false;
+      notifyListeners();
       throw Exception("Veri çekme hatası: $error");
     }
   }

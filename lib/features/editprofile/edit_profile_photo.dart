@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:giftbox/viewmodel/profile_view_model.dart';
 import 'package:giftbox/viewmodel/update_profile_image_view_model.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,8 @@ class EditProfilePhoto extends StatelessWidget {
               await profileViewModel.loadUserData();
             }
           },
-          child: const Text('Fotoğraf Değiştir'),
+          child: Text(
+              AppLocalizations.of(context)!.edit_profile_photo_change_label),
         ),
       ],
     );

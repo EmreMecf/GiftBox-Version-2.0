@@ -8,19 +8,12 @@ class FirebaseFirestoreService {
   Future<void> saveHistory(HistoryModel history) async {
     try {
       final docRef = _firestore.collection('history').doc();
-
+      final historyJson = history.toJson(); // HistoryModel'i JSON'a dönüştür
       await docRef.set({
-        'userId': history.userId,
-        'userMessage': history.userMessage,
-        'chatGptResponse': history.chatGptResponse,
-        'timestamp': Timestamp.fromDate(history.timestamp),
-        'title': history.title,
+        ...historyJson,
+        'timestamp': Timestamp.fromDate(history.timestamp), // Timestamp ayarı
       });
-
-      await docRef.update({
-        'messageId': docRef.id,
-      });
-
+      await docRef.update({'messageId': docRef.id});
       print('Mesaj başarıyla kaydedildi.');
     } catch (e) {
       print('Mesaj kaydedilirken hata oluştu: $e');
@@ -28,38 +21,28 @@ class FirebaseFirestoreService {
     }
   }
 
-  Stream<List<HistoryModel>> getHistoryList(String userId) {
+  Stream<DocumentSnapshot<Map<String, dynamic>>?> getLastMessage(
+      String userId) {
     return _firestore
         .collection('history')
         .where('userId', isEqualTo: userId)
+        .orderBy('timestamp', descending: true)
+        .limit(1)
         .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((doc) {
-        return HistoryModel(
-          messageId: doc.id,
-          // Belgenin ID'sini kullanarak messageId'yi alıyoruz
-          userId: doc['userId'],
-          userMessage: doc['userMessage'],
-          chatGptResponse: doc['chatGptResponse'],
-          timestamp: (doc['timestamp'] as Timestamp).toDate(),
-          title: doc['title'],
-        );
-      }).toList();
+        .map((querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs.first;
+      } else {
+        // Eğer doküman yoksa null döndürüyoruz
+        return null;
+      }
     });
   }
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> getHistoryStream({
-    required String historyId,
-  }) {
-    return _firestore.collection('history').doc(historyId).snapshots();
-  }
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> getHistoryListStream({
-    required String userId,
-  }) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getHistoryList(String userId) {
     return _firestore
         .collection('history')
-        .where("userId", isEqualTo: userId)
+        .where('userId', isEqualTo: userId)
         .snapshots();
   }
 
@@ -81,20 +64,5 @@ class FirebaseFirestoreService {
     } catch (e) {
       print('Mesaj güncellenirken hata: $e');
     }
-  }
-
-  Future<void> saveProfileImageUrl(String userId, String imageUrl) async {
-    try {
-      await _firestore.collection('users').doc(userId).update({
-        'profileImageUrl': imageUrl,
-      });
-      print('Resim URL\'si başarıyla güncellendi.');
-    } catch (e) {
-      print('Resim URL\'si güncellenirken hata: $e');
-    }
-  }
-
-  Stream<DocumentSnapshot> getUserProfile(String userId) {
-    return _firestore.collection('users').doc(userId).snapshots();
   }
 }
