@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 import '../services/models/chatgpt/chat_gpt_chat_response.dart';
 import '../services/models/firestore/index.dart';
 import '../services/models/network/result.dart';
-import '../services/models/products/products_model.dart';
 import '../services/models/states/category_selection_model.dart';
 import '../services/repositories/index.dart';
 
@@ -33,20 +30,6 @@ class ChatBotViewModel with ChangeNotifier {
 
   String? get userId => _firebaseAuthRepository.currentUserId;
 
-  HistoryModel buildProductMessage(ProductsModel product) {
-    return HistoryModel(
-      messageId: null,
-      // Firestore'a kaydederken otomatik oluşturulabilir
-      userId: userId!,
-      userMessage: product.name,
-      // Ürün adı kullanıcı mesajı olarak
-      chatGptResponse: product.description,
-      // Ürün açıklaması ChatGPT yanıtı olarak
-      timestamp: DateTime.now(),
-      title: 'Ürün: ${product.name}', // Başlık olarak ürün ismini kullanıyoruz
-    );
-  }
-
   Future<void> sendMessage(CategorySelectionModel categorySelection) async {
     _isLoading = true;
     notifyListeners();
@@ -60,12 +43,6 @@ class ChatBotViewModel with ChangeNotifier {
       final responseMessage = result.value?.choices.first.message.content;
 
       if (responseMessage != null) {
-        final products = parseProductsFromJson(responseMessage);
-
-        // Ürünleri chat ekranına ekliyoruz
-        _messageHistory
-            .addAll(products.map((product) => buildProductMessage(product)));
-
         // (Opsiyonel) Firestore'a mesajı kaydediyoruz
         final history = HistoryModel(
           userId: userId!,
@@ -117,10 +94,5 @@ class ChatBotViewModel with ChangeNotifier {
     - İlgi Alanları: ${categorySelection.interests?.join(', ')}
     Hediye önerilerini bir json'da ürün adı, açıklama, anahtar kelimeler olacak şekilde çıkaramanı istiyorum. Bu json'nın keyleri ingilizce değerleri türkçe olsun.
     ''';
-  }
-
-  List<ProductsModel> parseProductsFromJson(String responseMessage) {
-    final List<dynamic> jsonList = jsonDecode(responseMessage);
-    return jsonList.map((json) => ProductsModel.fromJson(json)).toList();
   }
 }

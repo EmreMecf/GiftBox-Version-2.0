@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../features/messagesview/messages_list.dart';
 import '../services/models/firestore/history_model.dart';
@@ -23,22 +22,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (lastHistoryStream == null) {
-      lastHistoryStream = context.read<ChatBotViewModel>().fetchLastMessage();
-    }
-  }
-
-  Future<void> _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  String buildGoogleShoppingUrl(String productName) {
-    final encodedProductName = Uri.encodeComponent(productName);
-    return 'https://www.google.com/search?tbm=shop&q=$encodedProductName';
+    lastHistoryStream ??= context.read<ChatBotViewModel>().fetchLastMessage();
   }
 
   @override
@@ -92,14 +76,6 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                           UserMessage(message: message.userMessage),
                         if (message.chatGptResponse.isNotEmpty) ...[
                           AiMessage(message: message.chatGptResponse),
-                          TextButton(
-                            onPressed: () {
-                              final googleShoppingUrl =
-                                  buildGoogleShoppingUrl(message.userMessage);
-                              _launchURL(googleShoppingUrl);
-                            },
-                            child: Text("Google Shopping'de Ara"),
-                          ),
                         ],
                       ],
                     ),
