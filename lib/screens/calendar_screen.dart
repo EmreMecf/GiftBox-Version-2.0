@@ -13,14 +13,19 @@ class CalendarScreen extends StatelessWidget {
         title:
             Text(AppLocalizations.of(context)!.calender_screen_app_bar_label),
       ),
-      body: const Column(
-        children: [
-          CalendarWidget(),
-          SizedBox(height: 20),
-          CalendarInputForm(),
-          SizedBox(height: 20),
-          CalendarList(),
-        ],
+      body: const SingleChildScrollView(
+        // Kaydırılabilir ekran ekliyoruz
+        child: Column(
+          mainAxisSize: MainAxisSize.min, // Minimum boyut ayarı
+          children: [
+            CalendarWidget(),
+            SizedBox(height: 20),
+            CalendarInputForm(),
+            SizedBox(height: 20),
+            // ListView'i Expanded ile sarmalayarak boyutlandırıyoruz
+            CalendarList(),
+          ],
+        ),
       ),
     );
   }

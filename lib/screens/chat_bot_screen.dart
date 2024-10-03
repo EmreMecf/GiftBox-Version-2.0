@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:giftbox/services/models/states/category_selection_model.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -18,10 +19,12 @@ class ChatBotScreen extends StatefulWidget {
 class _ChatBotScreenState extends State<ChatBotScreen> {
   final PanelController _panelController = PanelController();
   Stream<HistoryModel?>? lastHistoryStream;
+  late CategorySelectionModel categorySelection;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    // Son mesaj akışını çekme işlemi, henüz yapılmadıysa başlatılır
     lastHistoryStream ??= context.read<ChatBotViewModel>().fetchLastMessage();
   }
 
@@ -63,21 +66,27 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                     return const Center(child: Text("Hiç mesaj yok."));
                   }
                   final message = snapshot.data!;
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 12.0),
-                    child: Column(
-                      crossAxisAlignment:
-                          message.userId == chatBotViewModel.userId
-                              ? CrossAxisAlignment.end
-                              : CrossAxisAlignment.start,
-                      children: [
-                        if (message.userMessage.isNotEmpty)
-                          UserMessage(message: message.userMessage),
-                        if (message.chatGptResponse.isNotEmpty) ...[
-                          AiMessage(message: message.chatGptResponse),
+                  final products = chatBotViewModel.productsList;
+
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 175, top: 8.0, left: 12.0, right: 12.0),
+                      child: Column(
+                        crossAxisAlignment:
+                            message.userId == chatBotViewModel.userId
+                                ? CrossAxisAlignment.end
+                                : CrossAxisAlignment.start,
+                        children: [
+                          UserMessage(message: message.defaultUserMessage),
+                          if (message.chatGptResponse.isNotEmpty &&
+                              products.isNotEmpty) ...[
+                            AiMessage(
+                              products: products,
+                            ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   );
                 },

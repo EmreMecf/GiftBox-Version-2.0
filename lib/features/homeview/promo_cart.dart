@@ -9,10 +9,13 @@ class PromoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeViewModel = context.read<HomeViewModel>();
+    final theme = Theme.of(context); // Temayı al
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        color: theme.colorScheme.surface, // Temadan yüzey rengini al
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(
@@ -21,15 +24,22 @@ class PromoCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(AppLocalizations.of(context)!.home_promo_cart_heading,
-                        style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.teal)),
+                    Text(
+                      AppLocalizations.of(context)!.home_promo_cart_heading,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: theme
+                            .colorScheme.primary, // Temadan birincil rengi al
+                      ),
+                    ),
                     const SizedBox(height: 8),
                     Text(
                       AppLocalizations.of(context)!.home_promo_cart_title,
-                      style: const TextStyle(fontSize: 14),
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: theme.colorScheme
+                              .onSurface), // Temadan yüzey üzerindeki rengi al
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton(
@@ -37,9 +47,14 @@ class PromoCard extends StatelessWidget {
                         homeViewModel.goToChatBot();
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.teal),
+                        backgroundColor: theme
+                            .colorScheme.secondary, // Temadan ikincil rengi al
+                      ),
                       child: Text(
                         AppLocalizations.of(context)!.home_promo_cart_button,
+                        style: TextStyle(
+                            color: theme.colorScheme
+                                .onSecondary), // Temadan ikincil üzerindeki rengi al
                       ),
                     ),
                   ],
@@ -47,7 +62,7 @@ class PromoCard extends StatelessWidget {
               ),
               const SizedBox(width: 16),
               Image.asset('lib/assets/Aiicon.png', width: 80, height: 80),
-              // Replace with the actual image path
+              // Gerçek resim yolu ile değiştirin
             ],
           ),
         ),

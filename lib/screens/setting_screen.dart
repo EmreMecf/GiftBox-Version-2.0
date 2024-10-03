@@ -26,15 +26,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.setting_screen_app_bar_label),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ThemeAndFeedbackWidget(),
-            SizedBox(height: 20),
-            LanguageAndRegionWidget(),
-          ],
+      body: const SingleChildScrollView(
+        // Wrap with SingleChildScrollView
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ThemeAndFeedbackWidget(),
+              SizedBox(height: 20),
+              LanguageAndRegionWidget(),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: CustomNavBar(

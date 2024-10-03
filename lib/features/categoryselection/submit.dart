@@ -20,7 +20,7 @@ class SubmitChatGpt extends StatelessWidget {
           final categorySelection =
               categorySelectionViewModel.buildCategorySelectionModel();
 
-          await chatBotViewModel.sendMessage(categorySelection);
+          await chatBotViewModel.sendMessage(categorySelection, context);
         },
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,

@@ -13,7 +13,7 @@ class SpecialDaysSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context); // Temayı al
+    final theme = Theme.of(context);
 
     return Card(
       elevation: 4,
@@ -31,7 +31,7 @@ class SpecialDaysSection extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Wrap(
-              spacing: 8, // Butonlar arasındaki yatay boşluk
+              spacing: 8,
               children: [
                 ElevatedButton(
                   onPressed: () => onChanged(AppLocalizations.of(context)!

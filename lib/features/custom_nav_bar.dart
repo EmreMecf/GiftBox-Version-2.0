@@ -7,12 +7,17 @@ class CustomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onNavBarTap;
 
-  const CustomNavBar(
-      {super.key, required this.currentIndex, required this.onNavBarTap});
+  const CustomNavBar({
+    super.key,
+    required this.currentIndex,
+    required this.onNavBarTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     final navBarRoute = context.read<NavBarRoute>();
+    final theme = Theme.of(context); // Temayı al
+
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -21,26 +26,44 @@ class CustomNavBar extends StatelessWidget {
             topLeft: Radius.circular(30.0),
             topRight: Radius.circular(30.0),
           ),
-          child: BottomNavigationBar(
-            currentIndex: currentIndex,
-            onTap: (index) {
-              onNavBarTap(index);
-              if (index == 0) {
-                navBarRoute.goToHome();
-              } else if (index == 1) {
-                navBarRoute.goToCalendar();
-              }
-            },
-            items: [
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.home),
-                label: AppLocalizations.of(context)?.nav_bar_home_label,
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.calendar_month),
-                label: AppLocalizations.of(context)?.nav_bar_calender_label,
-              ),
-            ],
+          child: Container(
+            color: theme.colorScheme.surface, // Temadan yüzey rengini al
+            child: BottomNavigationBar(
+              currentIndex: currentIndex,
+              onTap: (index) {
+                onNavBarTap(index);
+                if (index == 0) {
+                  navBarRoute.goToHome();
+                } else if (index == 1) {
+                  navBarRoute.goToCalendar();
+                }
+              },
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.home,
+                    color: currentIndex == 0
+                        ? theme.colorScheme.primary
+                        : theme.colorScheme.onSurface,
+                  ),
+                  label: AppLocalizations.of(context)?.nav_bar_home_label,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.calendar_month,
+                    color: currentIndex == 1
+                        ? theme.colorScheme.primary
+                        : theme.colorScheme.onSurface,
+                  ),
+                  label: AppLocalizations.of(context)?.nav_bar_calender_label,
+                ),
+              ],
+              selectedItemColor: theme.colorScheme.primary,
+              // Seçilen öğe rengi
+              unselectedItemColor: theme.colorScheme.onSurface,
+              // Seçilmeyen öğe rengi
+              backgroundColor: theme.colorScheme.surface, // Arka plan rengi
+            ),
           ),
         ),
         Positioned(
@@ -48,7 +71,12 @@ class CustomNavBar extends StatelessWidget {
           left: MediaQuery.of(context).size.width / 2 - 30,
           child: FloatingActionButton(
             onPressed: () {},
-            child: const Icon(Icons.add),
+            backgroundColor: theme.colorScheme.secondary,
+            // Temadan ikincil rengi al
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
           ),
         ),
       ],

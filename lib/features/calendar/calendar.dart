@@ -10,6 +10,7 @@ class CalendarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final calendarViewModel = context.watch<CalendarViewModel>();
+    final theme = Theme.of(context); // Temayı al
 
     return TableCalendar(
       firstDay: DateTime.utc(2000, 1, 1),
@@ -22,12 +23,20 @@ class CalendarWidget extends StatelessWidget {
       },
       calendarStyle: CalendarStyle(
         todayDecoration: BoxDecoration(
-          color: Theme.of(context).primaryColor, // Temadan alınan renk
+          color: theme.colorScheme.primary,
           shape: BoxShape.circle,
         ),
         selectedDecoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary, // Temadan alınan renk
+          color: theme.colorScheme.secondary,
           shape: BoxShape.circle,
+        ),
+        defaultDecoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.transparent,
+        ),
+        weekendDecoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.transparent,
         ),
       ),
     );

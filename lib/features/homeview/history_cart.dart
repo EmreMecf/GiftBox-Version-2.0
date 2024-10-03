@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:giftbox/services/repositories/firebase_firestore_repository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:giftbox/features/homeview/rename_dialog.dart';
 import 'package:giftbox/viewmodel/history_delete_view_model.dart';
 import 'package:giftbox/viewmodel/history_detail_navigation_view_model.dart';
 import 'package:giftbox/viewmodel/history_view_model.dart';
@@ -31,6 +32,7 @@ class _HistoryCardState extends State<HistoryCard> {
     final historyDetailNavigationViewModel =
         context.read<HistoryDetailNavigationViewModel>();
     final historyDeleteViewModel = context.read<HistoryDeleteViewModel>();
+    final theme = Theme.of(context); // Temayı al
 
     return Consumer<HistoryViewModel>(
       builder: (context, viewModel, child) {
@@ -53,17 +55,27 @@ class _HistoryCardState extends State<HistoryCard> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              elevation: 2,
+              elevation: 4,
+              color: theme.colorScheme.surface,
               child: ListTile(
                 title: Text(
                   message.title,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: theme.textTheme.bodyLarge?.color,
+                  ),
                 ),
                 trailing: PopupMenuButton<String>(
                   onSelected: (value) async {
                     if (value == 'rename') {
-                      // Yeniden adlandırma işlemi
-                      await _showRenameDialog(context, message.messageId!);
+                      // Yeniden adlandırma işlemi için dialog göster
+                      showDialog(
+                        context: context,
+                        builder: (context) => RenameDialog(
+                          messageId: message.messageId!,
+                          currentTitle: message.title,
+                        ),
+                      );
                     } else if (value == 'delete') {
                       // Silme işlemi
                       await historyDeleteViewModel.deleteMessage(
@@ -72,64 +84,26 @@ class _HistoryCardState extends State<HistoryCard> {
                   },
                   itemBuilder: (BuildContext context) {
                     return [
-                      const PopupMenuItem<String>(
+                      PopupMenuItem<String>(
                         value: 'rename',
-                        child: Text('Yeniden Adlandır'),
+                        child: Text(AppLocalizations.of(context)!
+                            .history_cart_rename_label),
                       ),
-                      const PopupMenuItem<String>(
+                      PopupMenuItem<String>(
                         value: 'delete',
-                        child: Text('Sil'),
+                        child: Text(AppLocalizations.of(context)!
+                            .history_cart_delete_label),
                       ),
                     ];
                   },
                 ),
                 onTap: () {
                   historyDetailNavigationViewModel.goToHistoryDetail(
-                      message.userMessage, message.chatGptResponse);
+                      message.defaultUserMessage, message.chatGptResponse);
                 },
               ),
             );
           },
-        );
-      },
-    );
-  }
-
-  // Yeniden adlandırma için kullanıcıya bir dialog gösteriyoruz
-  Future<void> _showRenameDialog(BuildContext context, String messageId) async {
-    final TextEditingController _controller = TextEditingController();
-    final firebaseFirestoreRepository =
-        context.read<FirebaseFirestoreRepository>();
-
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // Kullanıcı diyaloğu kapatmak zorunda
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Mesajı Yeniden Adlandır'),
-          content: TextField(
-            controller: _controller,
-            decoration: const InputDecoration(hintText: 'Yeni başlık girin'),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('İptal'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text('Kaydet'),
-              onPressed: () async {
-                final newTitle = _controller.text;
-                if (newTitle.isNotEmpty) {
-                  await firebaseFirestoreRepository.updateMessageTitle(
-                      messageId, newTitle);
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ],
         );
       },
     );

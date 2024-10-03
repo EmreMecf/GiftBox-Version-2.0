@@ -9,7 +9,6 @@ class ProductsModel with _$ProductsModel {
     required String name,
     required String description,
     required List<String> keywords,
-    required String url, // Bu alan Google Shopping URL'si için kullanılacak
   }) = _ProductsModel;
 
   factory ProductsModel.fromJson(Map<String, dynamic> json) =>

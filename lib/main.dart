@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 
 import 'core/configs/thema/theme.dart';
 import 'core/utils/theme.dart';
-import 'features/feedback/feed_back_error.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -26,8 +25,25 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  static _MyAppState of(BuildContext context) {
+    return context.findAncestorStateOfType<_MyAppState>()!;
+  }
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale _locale = const Locale('en'); // Varsayılan dil İngilizce
+
+  void _setLocale(String languageCode) {
+    setState(() {
+      _locale = Locale(languageCode); // Yeni dili ayarla
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,29 +89,24 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<ThemeViewModel>(
         builder: (context, themeViewModel, child) {
-          return Column(
-            children: [
-              const FeedbackError(),
-              Expanded(
-                child: MaterialApp.router(
-                  debugShowCheckedModeBanner: false,
-                  routerConfig: injector<NavigationService>().router,
-                  localizationsDelegates: const [
-                    AppLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: const [
-                    Locale('en', ''),
-                    Locale('tr', ''),
-                  ],
-                  theme: theme.light(),
-                  darkTheme: theme.dark(),
-                  themeMode: themeViewModel.themeMode,
-                ),
-              ),
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: injector<NavigationService>().router,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
             ],
+            supportedLocales: const [
+              Locale('en', ''),
+              Locale('tr', ''),
+            ],
+            locale: _locale,
+            // Burada locale'i ayarlıyoruz
+            theme: theme.light(),
+            darkTheme: theme.dark(),
+            themeMode: themeViewModel.themeMode,
           );
         },
       ),

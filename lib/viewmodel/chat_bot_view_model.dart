@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:giftbox/services/models/products/products_model.dart';
 
 import '../services/models/chatgpt/chat_gpt_chat_response.dart';
 import '../services/models/firestore/index.dart';
@@ -20,6 +24,9 @@ class ChatBotViewModel with ChangeNotifier {
   );
 
   List<HistoryModel> _messageHistory = [];
+  List<ProductsModel> _productsList = [];
+
+  List<ProductsModel> get productsList => _productsList;
 
   List<HistoryModel> get messageHistory => _messageHistory;
   HistoryModel? _lastMessage;
@@ -30,32 +37,58 @@ class ChatBotViewModel with ChangeNotifier {
 
   String? get userId => _firebaseAuthRepository.currentUserId;
 
-  Future<void> sendMessage(CategorySelectionModel categorySelection) async {
+  // ChatGPT'ye gönderilecek mesajı oluşturur
+  String defaultChatGptMessage(CategorySelectionModel categorySelection) {
+    return '''
+    Merhaba, seçtiğim kategoriler ile hediye ürün önerileri almak istiyorum:
+    - Bütçe: ${categorySelection.minBudget} - ${categorySelection.maxBudget}
+    - Yaş: ${categorySelection.age}
+    - Cinsiyet: ${categorySelection.gender}
+    - Özel Gün: ${categorySelection.specialDay}
+    - İlgi Alanları: ${categorySelection.interests?.join(', ')}
+    ''';
+  }
+
+  List<ProductsModel> parseProducts(String? responseMessage) {
+    if (responseMessage != null) {
+      final jsonList = jsonDecode(responseMessage) as List<dynamic>;
+      return jsonList
+          .map((jsonItem) => ProductsModel.fromJson(jsonItem))
+          .toList();
+    } else {
+      return [];
+    }
+  }
+
+  Future<void> sendMessage(
+      CategorySelectionModel categorySelection, BuildContext context) async {
     _isLoading = true;
     notifyListeners();
 
-    final userMessage = buildChatGptMessage(categorySelection);
+    final chatGptRequest = buildChatGptMessage(categorySelection);
+    final defaultMessage = defaultChatGptMessage(categorySelection);
 
     // ChatGPT'ye mesaj gönderiyoruz
-    final result = await _chatGptRepository.chaMessage(userMessage);
+    final result = await _chatGptRepository.chaMessage(chatGptRequest);
 
     if (result is Success<ChatGptChatResponseModel, Exception>) {
-      final responseMessage = result.value?.choices.first.message.content;
+      final responseMessage =
+          result.value?.choices.first.message.content.replaceAll("```json", "");
 
       if (responseMessage != null) {
-        // (Opsiyonel) Firestore'a mesajı kaydediyoruz
+        _productsList = parseProducts(responseMessage);
+        notifyListeners();
+
         final history = HistoryModel(
           userId: userId!,
-          userMessage: userMessage,
+          chatGptRequest: chatGptRequest,
+          defaultUserMessage: defaultMessage,
           chatGptResponse: responseMessage,
           timestamp: DateTime.now(),
-          title: 'Hediye Önerileri',
+          title: AppLocalizations.of(context)!.history_cart_title_label,
         );
-
         // Firestore'a kaydetme
         await _firebaseFirestoreRepository.saveHistory(history);
-
-        print('Mesaj kaydedildi ve ID: ${history.messageId}');
       }
     } else {
       print('ChatGPT hatası: $result');
@@ -92,7 +125,7 @@ class ChatBotViewModel with ChangeNotifier {
     - Cinsiyet: ${categorySelection.gender}
     - Özel Gün: ${categorySelection.specialDay}
     - İlgi Alanları: ${categorySelection.interests?.join(', ')}
-    Hediye önerilerini bir json'da ürün adı, açıklama, anahtar kelimeler olacak şekilde çıkaramanı istiyorum. Bu json'nın keyleri ingilizce değerleri türkçe olsun.
+   Hediye önerilerini bir JSON formatında, json isimlendirmeden sadece name, description ve keywords olacak şekilde çıkar. Yanıtında sadece JSON çıktısı olsun, "```json" gibi bir format olmadan.
     ''';
   }
 }

@@ -18,7 +18,7 @@ class CalendarInputForm extends StatelessWidget {
         controller: nameController,
         decoration: InputDecoration(
           labelText: AppLocalizations.of(context)!.calender_input_form_label,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
           suffixIcon: IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {

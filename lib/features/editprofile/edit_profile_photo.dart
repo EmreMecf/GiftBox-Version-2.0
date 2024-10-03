@@ -12,6 +12,7 @@ class EditProfilePhoto extends StatelessWidget {
     final profileViewModel = context.watch<ProfileViewModel>();
     final updateProfileImageViewModel =
         Provider.of<UpdateProfileImageViewModel>(context, listen: false);
+    final theme = Theme.of(context); // Temayı al
 
     return Column(
       children: [
@@ -21,6 +22,7 @@ class EditProfilePhoto extends StatelessWidget {
               ? NetworkImage(profileViewModel.userPhoto!)
               : const AssetImage('lib/assets/user.png') as ImageProvider,
         ),
+        const SizedBox(height: 16), // Resim ile buton arasında boşluk
         TextButton(
           onPressed: () async {
             // ViewModel'den izin kontrolünü ve fotoğraf seçimini başlat
@@ -35,6 +37,9 @@ class EditProfilePhoto extends StatelessWidget {
               await profileViewModel.loadUserData();
             }
           },
+          style: TextButton.styleFrom(
+            primary: theme.colorScheme.secondary, // Temadan ikincil rengi al
+          ),
           child: Text(
               AppLocalizations.of(context)!.edit_profile_photo_change_label),
         ),

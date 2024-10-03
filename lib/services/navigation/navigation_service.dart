@@ -22,7 +22,6 @@ class NavigationService {
         GoRoute(
           path: '/',
           builder: (BuildContext context, GoRouterState state) {
-            print('Current user: ${_firebaseAuthRepository.currentUser}');
             return _firebaseAuthRepository.currentUser != null
                 ? const HomeScreen()
                 : const LoginScreen();
@@ -71,11 +70,6 @@ class NavigationService {
                     as Map<String, dynamic>?; // Geçilen parametreleri al
                 final userMessage = args?['userMessage'] ?? 'Mesaj yok';
                 final chatGptResponse = args?['chatGptResponse'] ?? 'Yanıt yok';
-
-                // VERİLERİN KONTROLÜ
-                print(
-                    'UserMessage: $userMessage, ChatGPTResponse: $chatGptResponse');
-
                 return HistoryDetailScreen(
                   userMessage: userMessage,
                   chatGptResponse: chatGptResponse,

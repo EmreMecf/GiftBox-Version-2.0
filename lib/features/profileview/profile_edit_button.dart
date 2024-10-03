@@ -9,12 +9,15 @@ class EditButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profilRouteViewModel = context.read<ProfileRouteViewModel>();
+    final theme = Theme.of(context); // Temayı al
+
     return ElevatedButton(
       onPressed: () {
         profilRouteViewModel.goToEditProfile();
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.teal,
+        backgroundColor:
+            theme.colorScheme.secondary, // Temadan ikincil rengi al
       ),
       child: Text(
         AppLocalizations.of(context)!.profile_edit_button,

@@ -15,51 +15,43 @@ class _ProfilAvatarPromoCardState extends State<ProfilAvatarPromoCard> {
     final profileViewModel = context.watch<ProfileViewModel>();
 
     if (profileViewModel.isLoading) {
-      return const CircularProgressIndicator();
+      return const Center(child: CircularProgressIndicator());
     }
-    return Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.center,
-      children: [
-        Container(
-          width: double.infinity,
-          height: 180,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(30),
-              bottomRight: Radius.circular(30),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 50,
-          child: CircleAvatar(
+
+    final theme = Theme.of(context); // Temayı al
+
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Avatar
+          CircleAvatar(
             radius: 50,
             backgroundImage: NetworkImage(profileViewModel.userPhoto!),
           ),
-        ),
-        Positioned(
-          top: 180,
-          child: Column(
-            children: [
-              Text(
-                profileViewModel.userName!,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                profileViewModel.userEmail!,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                ),
-              ),
-            ],
+          const SizedBox(height: 16), // Avatar ile metin arasında boşluk
+          // İsim
+          Text(
+            profileViewModel.userName!,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: theme
+                  .colorScheme.onSurface, // Temadan yüzey üzerindeki rengi al
+            ),
           ),
-        ),
-      ],
+          const SizedBox(height: 8), // İsim ile e-posta arasında boşluk
+          // E-posta
+          Text(
+            profileViewModel.userEmail!,
+            style: TextStyle(
+              fontSize: 16,
+              color: theme.colorScheme
+                  .onSurfaceVariant, // Temadan yüzey üzerindeki varyant rengi al
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

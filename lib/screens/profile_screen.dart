@@ -46,8 +46,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // Wrap Column with SingleChildScrollView
               child: Column(
                 children: [
+                  SizedBox(height: 50),
                   ProfilAvatarPromoCard(),
-                  SizedBox(height: 60),
+                  SizedBox(height: 10),
                   EditButton(),
                   SizedBox(height: 30),
                   OptionList(),

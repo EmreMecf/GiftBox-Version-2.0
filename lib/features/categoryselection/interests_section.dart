@@ -79,7 +79,7 @@ class InterestsSection extends StatelessWidget {
                     style: TextStyle(
                       color: selectedInterests.contains(interest)
                           ? Colors.white
-                          : Colors.black, // Seçili ise beyaz, değilse siyah
+                          : Colors.black,
                     ),
                   ),
                   selected: selectedInterests.contains(interest),

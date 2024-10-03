@@ -10,6 +10,7 @@ class OptionList extends StatelessWidget {
   Widget build(BuildContext context) {
     final signOutViewModel = context.read<SignOutViewModel>();
     final profileRouteViewModel = context.read<ProfileRouteViewModel>();
+    final theme = Theme.of(context); // Temayı al
 
     return Column(
       children: [

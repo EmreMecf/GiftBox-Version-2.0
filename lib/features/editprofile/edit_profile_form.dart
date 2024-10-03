@@ -28,13 +28,13 @@ class _EditProfileFormState extends State<EditProfileForm> {
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final updateProfileViewModel = context.watch<UpdateProfileViewModel>();
+    final theme = Theme.of(context); // Temayı al
 
     return Form(
       key: _formKey,
@@ -44,7 +44,12 @@ class _EditProfileFormState extends State<EditProfileForm> {
             controller: _nameController,
             decoration: InputDecoration(
               labelText: AppLocalizations.of(context)!.edit_profile_name_label,
-              border: const OutlineInputBorder(),
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color:
+                        theme.colorScheme.primary), // Temadan birincil rengi al
+              ),
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -59,7 +64,12 @@ class _EditProfileFormState extends State<EditProfileForm> {
             decoration: InputDecoration(
               labelText:
                   AppLocalizations.of(context)!.edit_profile_eposta_label,
-              border: const OutlineInputBorder(),
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color:
+                        theme.colorScheme.primary), // Temadan birincil rengi al
+              ),
             ),
             readOnly: true,
           ),
@@ -73,10 +83,16 @@ class _EditProfileFormState extends State<EditProfileForm> {
                           .updateDisplayName(_nameController.text);
                     }
                   },
+            style: ElevatedButton.styleFrom(
+              backgroundColor:
+                  theme.colorScheme.secondary, // Temadan ikincil rengi al
+            ),
             child: updateProfileViewModel.isLoading
                 ? const CircularProgressIndicator()
                 : Text(
-                    AppLocalizations.of(context)!.edit_profile_submit_button),
+                    AppLocalizations.of(context)!.edit_profile_submit_button,
+                    style: const TextStyle(color: Colors.white),
+                  ),
           ),
           if (updateProfileViewModel.errorMessage != null)
             Padding(

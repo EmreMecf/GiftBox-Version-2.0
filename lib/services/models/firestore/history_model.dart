@@ -9,10 +9,10 @@ class HistoryModel with _$HistoryModel {
   const factory HistoryModel({
     String? messageId,
     required String userId,
-    required String userMessage,
+    required String chatGptRequest,
+    required String defaultUserMessage,
     required String chatGptResponse,
-    @TimestampConverter()
-    required DateTime timestamp, // @TimestampConverter eklendi
+    @TimestampConverter() required DateTime timestamp,
     required String title,
   }) = _HistoryModel;
 
