@@ -35,12 +35,10 @@ class InterestsSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              child: Text(
-                'İlgi Alanları',
-                style: theme.textTheme.titleLarge
-                    ?.copyWith(fontWeight: FontWeight.bold),
-              ),
+            Text(
+              'İlgi Alanları',
+              style: theme.textTheme.headline6
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             Wrap(
@@ -52,7 +50,7 @@ class InterestsSection extends StatelessWidget {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: selectedCategory == category
-                          ? theme.primaryColor
+                          ? theme.colorScheme.primary
                           : Colors.grey[200],
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -62,7 +60,7 @@ class InterestsSection extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: selectedCategory == category
                             ? Colors.white
-                            : Colors.black, // Seçili kategoriye göre renk
+                            : Colors.black,
                       ),
                     ),
                   ),
@@ -85,7 +83,7 @@ class InterestsSection extends StatelessWidget {
                   selected: selectedInterests.contains(interest),
                   onSelected: (selected) => onInterestToggled(interest),
                   backgroundColor: Colors.grey[200],
-                  selectedColor: theme.primaryColor,
+                  selectedColor: theme.colorScheme.primary,
                 );
               }).toList(),
             ),

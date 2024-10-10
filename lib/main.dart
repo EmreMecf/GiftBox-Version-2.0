@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:giftbox/core/configs/font.dart';
 import 'package:giftbox/services/firebase/index.dart';
 import 'package:giftbox/services/injector.dart';
 import 'package:giftbox/services/navigation/index.dart';
@@ -13,7 +12,6 @@ import 'package:giftbox/viewmodel/index.dart';
 import 'package:provider/provider.dart';
 
 import 'core/configs/thema/theme.dart';
-import 'core/utils/theme.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -39,17 +37,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Locale _locale = const Locale('en'); // Varsayılan dil İngilizce
 
-  void _setLocale(String languageCode) {
-    setState(() {
-      _locale = Locale(languageCode); // Yeni dili ayarla
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = createTextTheme(context, displayFont, bodyFont);
-    MaterialTheme theme = MaterialTheme(textTheme);
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => injector<HistoryViewModel>()),
@@ -66,6 +55,7 @@ class _MyAppState extends State<MyApp> {
               FirebaseFirestoreRepository(firebaseService),
         ),
         Provider(create: (_) => injector<HomeViewModel>()),
+        Provider(create: (_) => injector<CategoryRouteViewModel>()),
         Provider(create: (_) => injector<HistoryDetailNavigationViewModel>()),
         Provider(create: (_) => injector<ProfileRouteViewModel>()),
         Provider(create: (_) => injector<SettingsViewModel>()),
@@ -84,8 +74,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => injector<CalendarViewModel>()),
         ChangeNotifierProvider(
             create: (_) => injector<CategorySelectionViewModel>()),
-        ChangeNotifierProvider(
-            create: (_) => injector<ChatBotViewModel>()..fetchLastMessage()),
+        ChangeNotifierProvider(create: (_) => injector<ChatBotViewModel>()),
       ],
       child: Consumer<ThemeViewModel>(
         builder: (context, themeViewModel, child) {
@@ -103,9 +92,8 @@ class _MyAppState extends State<MyApp> {
               Locale('tr', ''),
             ],
             locale: _locale,
-            // Burada locale'i ayarlıyoruz
-            theme: theme.light(),
-            darkTheme: theme.dark(),
+            theme: MaterialTheme.light(),
+            darkTheme: MaterialTheme.dark(),
             themeMode: themeViewModel.themeMode,
           );
         },

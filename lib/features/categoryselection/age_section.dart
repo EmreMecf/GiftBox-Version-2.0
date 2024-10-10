@@ -21,24 +21,42 @@ class AgeSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(AppLocalizations.of(context)!.category_age_heading,
-                style: theme.textTheme.titleLarge
-                    ?.copyWith(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
-            Slider(
-              value: age,
-              min: 0,
-              max: 100,
-              divisions: 100,
-              label: age.round().toString(),
-              onChanged: onChanged,
-              activeColor: theme.primaryColor,
-              inactiveColor: Colors.grey[300],
+            Text(
+              AppLocalizations.of(context)!.category_age_heading,
+              style: theme.textTheme.headline6
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-            Text(
-                '${AppLocalizations.of(context)!.category_age_little_title} ${age.round()}',
-                style: theme.textTheme.bodyLarge),
+            Column(
+              children: [
+                SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    activeTrackColor: theme.colorScheme.primary,
+                    inactiveTrackColor: Colors.grey[300],
+                    thumbColor: theme.colorScheme.primary,
+                    overlayColor: theme.colorScheme.primary.withOpacity(0.2),
+                    trackHeight: 8.0,
+                    thumbShape:
+                        const RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                    overlayShape:
+                        const RoundSliderOverlayShape(overlayRadius: 24.0),
+                  ),
+                  child: Slider(
+                    value: age,
+                    min: 0,
+                    max: 100,
+                    divisions: 100,
+                    label: age.round().toString(),
+                    onChanged: onChanged,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  '${AppLocalizations.of(context)!.category_age_little_title} ${age.round()}',
+                  style: theme.textTheme.bodyText1,
+                ),
+              ],
+            ),
           ],
         ),
       ),

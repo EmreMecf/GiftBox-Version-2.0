@@ -41,15 +41,14 @@ class SpecialDaysSection extends StatelessWidget {
                             AppLocalizations.of(context)!
                                 .category_special_days_anneler_gunu
                         ? Colors.white
-                        : theme.primaryColor,
+                        : theme.colorScheme.primary,
                     backgroundColor: specialDay ==
                             AppLocalizations.of(context)!
                                 .category_special_days_anneler_gunu
-                        ? theme.primaryColor
+                        ? theme.colorScheme.primary
                         : Colors.grey[200],
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                        borderRadius: BorderRadius.circular(10)),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
                   ),
@@ -64,15 +63,14 @@ class SpecialDaysSection extends StatelessWidget {
                             AppLocalizations.of(context)!
                                 .category_special_days_babalar_gunu
                         ? Colors.white
-                        : theme.primaryColor,
+                        : theme.colorScheme.primary,
                     backgroundColor: specialDay ==
                             AppLocalizations.of(context)!
                                 .category_special_days_babalar_gunu
-                        ? theme.primaryColor
+                        ? theme.colorScheme.primary
                         : Colors.grey[200],
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                        borderRadius: BorderRadius.circular(10)),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
                   ),
@@ -87,15 +85,14 @@ class SpecialDaysSection extends StatelessWidget {
                             AppLocalizations.of(context)!
                                 .category_special_days_dogum_gunu
                         ? Colors.white
-                        : theme.primaryColor,
+                        : theme.colorScheme.primary,
                     backgroundColor: specialDay ==
                             AppLocalizations.of(context)!
                                 .category_special_days_dogum_gunu
-                        ? theme.primaryColor
+                        ? theme.colorScheme.primary
                         : Colors.grey[200],
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                        borderRadius: BorderRadius.circular(10)),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
                   ),
@@ -110,15 +107,14 @@ class SpecialDaysSection extends StatelessWidget {
                             AppLocalizations.of(context)!
                                 .category_special_days_sevililer_gunu
                         ? Colors.white
-                        : theme.primaryColor,
+                        : theme.colorScheme.primary,
                     backgroundColor: specialDay ==
                             AppLocalizations.of(context)!
                                 .category_special_days_sevililer_gunu
-                        ? theme.primaryColor
+                        ? theme.colorScheme.primary
                         : Colors.grey[200],
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                        borderRadius: BorderRadius.circular(10)),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
                   ),
@@ -133,15 +129,14 @@ class SpecialDaysSection extends StatelessWidget {
                             AppLocalizations.of(context)!
                                 .category_special_days_yilbasi
                         ? Colors.white
-                        : theme.primaryColor,
+                        : theme.colorScheme.primary,
                     backgroundColor: specialDay ==
                             AppLocalizations.of(context)!
                                 .category_special_days_yilbasi
-                        ? theme.primaryColor
+                        ? theme.colorScheme.primary
                         : Colors.grey[200],
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                        borderRadius: BorderRadius.circular(10)),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
                   ),

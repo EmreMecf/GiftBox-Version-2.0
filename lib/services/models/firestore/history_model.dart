@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:giftbox/services/models/products/products_model.dart';
+
+import '../states/category_selection_model.dart';
 
 part 'history_model.freezed.dart';
 part 'history_model.g.dart';
@@ -10,9 +13,10 @@ class HistoryModel with _$HistoryModel {
     String? messageId,
     required String userId,
     required String chatGptRequest,
-    required String defaultUserMessage,
     required String chatGptResponse,
     @TimestampConverter() required DateTime timestamp,
+    List<ProductsModel>? products,
+    CategorySelectionModel? categorySelection,
     required String title,
   }) = _HistoryModel;
 

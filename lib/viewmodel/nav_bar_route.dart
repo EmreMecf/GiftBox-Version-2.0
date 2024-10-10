@@ -12,4 +12,8 @@ class NavBarRoute {
   void goToHome() {
     _navigationService.goHome();
   }
+
+  void goToCategory() {
+    _navigationService.goCategory();
+  }
 }

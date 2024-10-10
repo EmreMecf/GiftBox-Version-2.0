@@ -1,4 +1,5 @@
 export 'calendar_view_model.dart';
+export 'category_route_view_model.dart';
 export 'category_selection_view_model.dart';
 export 'chat_bot_view_model.dart';
 export 'error_view_model.dart';

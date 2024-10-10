@@ -70,7 +70,9 @@ class CustomNavBar extends StatelessWidget {
           top: -30,
           left: MediaQuery.of(context).size.width / 2 - 30,
           child: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              navBarRoute.goToCategory();
+            },
             backgroundColor: theme.colorScheme.secondary,
             // Temadan ikincil rengi al
             child: const Icon(

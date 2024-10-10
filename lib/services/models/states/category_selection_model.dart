@@ -1,9 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'category_selection_model.freezed.dart';
+part 'category_selection_model.g.dart'; // JSON destek dosyası
 
 @freezed
 class CategorySelectionModel with _$CategorySelectionModel {
+  @JsonSerializable(explicitToJson: true)
   const factory CategorySelectionModel({
     String? minBudget,
     String? maxBudget,
@@ -12,4 +14,7 @@ class CategorySelectionModel with _$CategorySelectionModel {
     String? specialDay,
     List<String>? interests,
   }) = _CategorySelectionModel;
+
+  factory CategorySelectionModel.fromJson(Map<String, dynamic> json) =>
+      _$CategorySelectionModelFromJson(json); // JSON'dan deserialize et
 }

@@ -44,7 +44,7 @@ class PromoCard extends StatelessWidget {
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {
-                        homeViewModel.goToChatBot();
+                        homeViewModel.goToCategory();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: theme

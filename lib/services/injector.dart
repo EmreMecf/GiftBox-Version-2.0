@@ -69,6 +69,8 @@ Future initInjector() async {
   injector
       .registerFactory<ProfileViewModel>(() => ProfileViewModel(injector()));
   injector.registerFactory<HomeViewModel>(() => HomeViewModel(injector()));
+  injector.registerFactory<CategoryRouteViewModel>(
+      () => CategoryRouteViewModel(injector()));
   injector.registerFactory<HistoryDetailNavigationViewModel>(
       () => HistoryDetailNavigationViewModel(injector()));
   injector.registerFactory<ProfileRouteViewModel>(

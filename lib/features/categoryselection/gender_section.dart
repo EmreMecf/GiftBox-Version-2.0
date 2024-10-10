@@ -25,60 +25,50 @@ class GenderSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(AppLocalizations.of(context)!.category_gender_heading,
-                style: theme.textTheme.titleLarge
+                style: theme.textTheme.headline6
                     ?.copyWith(fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Expanded(
                   child: RadioListTile<String>(
-                    title: Text(AppLocalizations.of(context)!
-                        .category_gender_erkek_label),
-                    value: AppLocalizations.of(context)!
-                        .category_gender_erkek_value,
-                    groupValue: gender,
-                    onChanged: onChanged,
-                  ),
-                ),
-                Expanded(
+                title: Text(
+                    AppLocalizations.of(context)!.category_gender_erkek_label),
+                value:
+                    AppLocalizations.of(context)!.category_gender_erkek_value,
+                groupValue: gender,
+                onChanged: onChanged,
+              )),
+              Expanded(
                   child: RadioListTile<String>(
-                    title: Text(AppLocalizations.of(context)!
-                        .category_gender_kadin_label),
-                    value: AppLocalizations.of(context)!
-                        .category_gender_kadin_value,
-                    groupValue: gender,
-                    onChanged: onChanged,
-                  ),
-                ),
-              ],
-            ),
+                title: Text(
+                    AppLocalizations.of(context)!.category_gender_kadin_label),
+                value:
+                    AppLocalizations.of(context)!.category_gender_kadin_value,
+                groupValue: gender,
+                onChanged: onChanged,
+              )),
+            ]),
             const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Expanded(
                   child: RadioListTile<String>(
-                    title: Text(AppLocalizations.of(context)!
-                        .category_gender_cocuk_label),
-                    value: AppLocalizations.of(context)!
-                        .category_gender_cocuk_value,
-                    groupValue: gender,
-                    onChanged: onChanged,
-                  ),
-                ),
-                Expanded(
+                title: Text(
+                    AppLocalizations.of(context)!.category_gender_cocuk_label),
+                value:
+                    AppLocalizations.of(context)!.category_gender_cocuk_value,
+                groupValue: gender,
+                onChanged: onChanged,
+              )),
+              Expanded(
                   child: RadioListTile<String>(
-                    title: Text(AppLocalizations.of(context)!
-                        .category_gender_diger_label),
-                    value: AppLocalizations.of(context)!
-                        .category_gender_diger_value,
-                    groupValue: gender,
-                    onChanged: onChanged,
-                  ),
-                ),
-              ],
-            ),
+                title: Text(
+                    AppLocalizations.of(context)!.category_gender_diger_label),
+                value:
+                    AppLocalizations.of(context)!.category_gender_diger_value,
+                groupValue: gender,
+                onChanged: onChanged,
+              )),
+            ]),
           ],
         ),
       ),

@@ -66,6 +66,18 @@ class CategorySelectionViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  // Seçimleri sıfırlayan metot
+  void resetSelection() {
+    _age = 25;
+    _minBudget = '';
+    _maxBudget = '';
+    _gender = 'Erkek';
+    _specialDay = 'Doğum Günü';
+    _selectedInterests = [];
+    _selectedCategory = 'Eğlence';
+    notifyListeners(); // UI'ı güncelle
+  }
+
   CategorySelectionModel buildCategorySelectionModel() {
     return CategorySelectionModel(
       minBudget: minBudget,

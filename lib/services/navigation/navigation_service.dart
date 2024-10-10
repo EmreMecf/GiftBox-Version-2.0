@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/homeview/history_detail.dart';
 import '../../screens/index.dart';
+import '../models/firestore/index.dart';
 
 class NavigationService {
   final FirebaseAuthRepository _firebaseAuthRepository;
@@ -33,6 +34,11 @@ class NavigationService {
                 return const ChatBotScreen();
               },
             ),
+            GoRoute(
+                path: 'category',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const CategorySelectionScreen();
+                }),
             GoRoute(
                 path: 'profile',
                 builder: (BuildContext context, GoRouterState state) {
@@ -68,11 +74,9 @@ class NavigationService {
               builder: (BuildContext context, GoRouterState state) {
                 final args = state.extra
                     as Map<String, dynamic>?; // Geçilen parametreleri al
-                final userMessage = args?['userMessage'] ?? 'Mesaj yok';
-                final chatGptResponse = args?['chatGptResponse'] ?? 'Yanıt yok';
+                final message = args?['message'] ?? 'Mesaj yok';
                 return HistoryDetailScreen(
-                  userMessage: userMessage,
-                  chatGptResponse: chatGptResponse,
+                  message: message,
                 );
               },
             )
@@ -88,6 +92,10 @@ class NavigationService {
 
   void goChatBot() {
     _router.go('/chatbot');
+  }
+
+  void goCategory() {
+    _router.go('/category');
   }
 
   void goProfile() {
@@ -114,10 +122,9 @@ class NavigationService {
     _router.go('/calendar');
   }
 
-  void goHistoryDetail(String userMessage, String chatGptResponse) {
+  void goHistoryDetail(HistoryModel message) {
     _router.go('/historydetail', extra: {
-      'userMessage': userMessage,
-      'chatGptResponse': chatGptResponse,
+      'message': message,
     });
   }
 }

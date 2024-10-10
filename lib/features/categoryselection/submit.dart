@@ -11,6 +11,7 @@ class SubmitChatGpt extends StatelessWidget {
     final chatBotViewModel = context.watch<ChatBotViewModel>();
     final categorySelectionViewModel =
         context.watch<CategorySelectionViewModel>();
+    final categoryRouteViewModel = context.read<CategoryRouteViewModel>();
     final theme = Theme.of(context);
 
     return Padding(
@@ -20,11 +21,12 @@ class SubmitChatGpt extends StatelessWidget {
           final categorySelection =
               categorySelectionViewModel.buildCategorySelectionModel();
 
-          await chatBotViewModel.sendMessage(categorySelection, context);
+          await chatBotViewModel.sendMessage(categorySelection);
+          categoryRouteViewModel.goToChatBot();
         },
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
-          backgroundColor: theme.primaryColor,
+          backgroundColor: theme.colorScheme.primary,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

@@ -5,15 +5,18 @@ import '../models/firestore/index.dart';
 class FirebaseFirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> saveHistory(HistoryModel history) async {
+  Future<String> saveHistory(HistoryModel history) async {
     try {
       final docRef = _firestore.collection('history').doc();
       final historyJson = history.toJson(); // HistoryModel'i JSON'a dönüştür
       await docRef.set({
         ...historyJson,
+        'products':
+            history.products?.map((product) => product.toJson()).toList(),
         'timestamp': Timestamp.fromDate(history.timestamp), // Timestamp ayarı
       });
       await docRef.update({'messageId': docRef.id});
+      return docRef.id;
       print('Mesaj başarıyla kaydedildi.');
     } catch (e) {
       print('Mesaj kaydedilirken hata oluştu: $e');
@@ -21,22 +24,12 @@ class FirebaseFirestoreService {
     }
   }
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>?> getLastMessage(
-      String userId) {
-    return _firestore
+  Stream<DocumentSnapshot<Map<String, dynamic>>> listenToMessage(
+      String messageId) {
+    return FirebaseFirestore.instance
         .collection('history')
-        .where('userId', isEqualTo: userId)
-        .orderBy('timestamp', descending: true)
-        .limit(1)
-        .snapshots()
-        .map((querySnapshot) {
-      if (querySnapshot.docs.isNotEmpty) {
-        return querySnapshot.docs.first;
-      } else {
-        // Eğer doküman yoksa null döndürüyoruz
-        return null;
-      }
-    });
+        .doc(messageId)
+        .snapshots();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getHistoryList(String userId) {

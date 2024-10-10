@@ -9,7 +9,7 @@ class HomeViewModel {
     _navigationService.goProfile();
   }
 
-  void goToChatBot() {
-    _navigationService.goChatBot();
+  void goToCategory() {
+    _navigationService.goCategory();
   }
 }

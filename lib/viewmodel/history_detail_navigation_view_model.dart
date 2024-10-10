@@ -1,3 +1,4 @@
+import 'package:giftbox/services/models/firestore/index.dart';
 import 'package:giftbox/services/navigation/index.dart';
 
 class HistoryDetailNavigationViewModel {
@@ -5,7 +6,7 @@ class HistoryDetailNavigationViewModel {
 
   HistoryDetailNavigationViewModel(this._navigationService);
 
-  void goToHistoryDetail(String userMessage, String chatGptResponse) {
-    _navigationService.goHistoryDetail(userMessage, chatGptResponse);
+  void goToHistoryDetail(HistoryModel message) {
+    _navigationService.goHistoryDetail(message);
   }
 }

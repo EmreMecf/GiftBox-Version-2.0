@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:giftbox/services/models/products/products_model.dart';
 
 import '../services/models/chatgpt/chat_gpt_chat_response.dart';
@@ -15,39 +14,25 @@ class ChatBotViewModel with ChangeNotifier {
   final FirebaseAuthRepository _firebaseAuthRepository;
   final ChatGptRepository _chatGptRepository;
 
-  bool _isLoading = false;
-
   ChatBotViewModel(
     this._firebaseFirestoreRepository,
     this._firebaseAuthRepository,
     this._chatGptRepository,
   );
 
-  List<HistoryModel> _messageHistory = [];
   List<ProductsModel> _productsList = [];
 
   List<ProductsModel> get productsList => _productsList;
 
-  List<HistoryModel> get messageHistory => _messageHistory;
-  HistoryModel? _lastMessage;
-
-  HistoryModel? get lastMessage => _lastMessage; // Getter
+  bool _isLoading = false;
 
   bool get isLoading => _isLoading;
 
-  String? get userId => _firebaseAuthRepository.currentUserId;
+  CategorySelectionModel?
+      categorySelection; // Kullanıcının seçtiği kategorileri sakla
 
-  // ChatGPT'ye gönderilecek mesajı oluşturur
-  String defaultChatGptMessage(CategorySelectionModel categorySelection) {
-    return '''
-    Merhaba, seçtiğim kategoriler ile hediye ürün önerileri almak istiyorum:
-    - Bütçe: ${categorySelection.minBudget} - ${categorySelection.maxBudget}
-    - Yaş: ${categorySelection.age}
-    - Cinsiyet: ${categorySelection.gender}
-    - Özel Gün: ${categorySelection.specialDay}
-    - İlgi Alanları: ${categorySelection.interests?.join(', ')}
-    ''';
-  }
+  String? get userId => _firebaseAuthRepository.currentUserId;
+  Stream<HistoryModel?>? messageStream;
 
   List<ProductsModel> parseProducts(String? responseMessage) {
     if (responseMessage != null) {
@@ -60,58 +45,55 @@ class ChatBotViewModel with ChangeNotifier {
     }
   }
 
-  Future<void> sendMessage(
-      CategorySelectionModel categorySelection, BuildContext context) async {
+  Future<void> sendMessage(CategorySelectionModel categorySelection) async {
     _isLoading = true;
     notifyListeners();
 
-    final chatGptRequest = buildChatGptMessage(categorySelection);
-    final defaultMessage = defaultChatGptMessage(categorySelection);
+    try {
+      final chatGptRequest = buildChatGptMessage(categorySelection);
 
-    // ChatGPT'ye mesaj gönderiyoruz
-    final result = await _chatGptRepository.chaMessage(chatGptRequest);
+      final result = await _chatGptRepository.chaMessage(chatGptRequest);
 
-    if (result is Success<ChatGptChatResponseModel, Exception>) {
-      final responseMessage =
-          result.value?.choices.first.message.content.replaceAll("```json", "");
+      if (result is Success<ChatGptChatResponseModel, Exception>) {
+        final responseMessage = result.value?.choices.first.message.content;
 
-      if (responseMessage != null) {
-        _productsList = parseProducts(responseMessage);
-        notifyListeners();
+        if (responseMessage != null) {
+          _productsList = parseProducts(responseMessage);
+          notifyListeners();
 
-        final history = HistoryModel(
-          userId: userId!,
-          chatGptRequest: chatGptRequest,
-          defaultUserMessage: defaultMessage,
-          chatGptResponse: responseMessage,
-          timestamp: DateTime.now(),
-          title: AppLocalizations.of(context)!.history_cart_title_label,
-        );
-        // Firestore'a kaydetme
-        await _firebaseFirestoreRepository.saveHistory(history);
-      }
-    } else {
-      print('ChatGPT hatası: $result');
-    }
-
-    _isLoading = false;
-    notifyListeners();
-  }
-
-  Stream<HistoryModel?> fetchLastMessage() {
-    return _firebaseFirestoreRepository.getHistoryList(userId!).map((result) {
-      if (result is Success<List<HistoryModel>, Exception>) {
-        final historyList = result.value;
-
-        if (historyList!.isNotEmpty) {
-          return historyList
-              .first; // Listenin ilk elemanını yani son mesajı döndürüyoruz
-        } else {
-          return null; // Eğer boşsa null döndürüyoruz
+          final history = HistoryModel(
+            userId: userId!,
+            chatGptRequest: chatGptRequest,
+            chatGptResponse: responseMessage,
+            timestamp: DateTime.now(),
+            title: "Hediye Önerileri",
+            products: _productsList,
+          );
+          final result =
+              await _firebaseFirestoreRepository.saveHistory(history);
+          messageStream = fetchMessage((result as Success).value);
         }
       } else {
-        print(result.toString()); // Hata varsa hata mesajını yazdır
-        return null; // Hata durumunda null döndürüyoruz
+        throw Exception('ChatGPT hatası: $result');
+      }
+    } catch (error) {
+      print(error);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  // Firestore'dan son mesajı çek
+  Stream<HistoryModel?> fetchMessage(String messageId) {
+    return _firebaseFirestoreRepository
+        .listenToMessage(messageId)
+        .map((result) {
+      if (result is Success<HistoryModel, Exception>) {
+        return result.value;
+      } else {
+        print('Mesaj alınırken hata: ${result.toString()}');
+        return null;
       }
     });
   }
@@ -125,7 +107,7 @@ class ChatBotViewModel with ChangeNotifier {
     - Cinsiyet: ${categorySelection.gender}
     - Özel Gün: ${categorySelection.specialDay}
     - İlgi Alanları: ${categorySelection.interests?.join(', ')}
-   Hediye önerilerini bir JSON formatında, json isimlendirmeden sadece name, description ve keywords olacak şekilde çıkar. Yanıtında sadece JSON çıktısı olsun, "```json" gibi bir format olmadan.
+    Hediye önerilerini bir JSON formatında, json isimlendirmeden sadece name, description ve keywords olacak şekilde çıkar. Yanıtında sadece JSON çıktısı olsun, "```json" gibi bir format olmadan.
     ''';
   }
 }

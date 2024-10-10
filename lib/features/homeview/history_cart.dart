@@ -98,8 +98,7 @@ class _HistoryCardState extends State<HistoryCard> {
                   },
                 ),
                 onTap: () {
-                  historyDetailNavigationViewModel.goToHistoryDetail(
-                      message.defaultUserMessage, message.chatGptResponse);
+                  historyDetailNavigationViewModel.goToHistoryDetail(message);
                 },
               ),
             );

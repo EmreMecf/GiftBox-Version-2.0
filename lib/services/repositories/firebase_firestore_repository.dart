@@ -8,21 +8,21 @@ class FirebaseFirestoreRepository {
   FirebaseFirestoreRepository(this._firestoreService);
 
   /// History kaydını Firestore'a kaydetme
-  Future<Result<void, Exception>> saveHistory(HistoryModel history) async {
+  Future<Result<String, Exception>> saveHistory(HistoryModel history) async {
     try {
-      await _firestoreService.saveHistory(history);
-      return const Success(null); // Başarılı sonuç
+      final id = await _firestoreService.saveHistory(history);
+      return Success(id); // Başarılı sonuç
     } catch (e) {
       return Failure(Exception('History kaydedilemedi: $e')); // Hata sonucu
     }
   }
 
-  Stream<Result<HistoryModel, Exception>> getLastMessage(String userId) {
-    return _firestoreService.getLastMessage(userId).map((snapshot) {
-      if (snapshot != null && snapshot.exists) {
+  Stream<Result<HistoryModel, Exception>> listenToMessage(String messageId) {
+    return _firestoreService.listenToMessage(messageId).map((querySnapshot) {
+      if (querySnapshot.exists && querySnapshot.data() != null) {
         try {
-          final history = HistoryModel.fromJson(snapshot.data()!);
-          return Success(history); // Başarılı sonuç
+          final history = HistoryModel.fromJson(querySnapshot.data()!);
+          return Success(history);
         } catch (e) {
           return Failure(Exception('Veri dönüştürme hatası: $e'));
         }
@@ -38,7 +38,7 @@ class FirebaseFirestoreRepository {
     return _firestoreService.getHistoryList(userId).map((querySnapshot) {
       try {
         final historyList = querySnapshot.docs.map((doc) {
-          return HistoryModel.fromJson(doc.data() as Map<String, dynamic>);
+          return HistoryModel.fromJson(doc.data());
         }).toList();
 
         return Success(historyList); // Başarılı sonuç

@@ -71,6 +71,8 @@ class _BudgetSectionState extends State<BudgetSection> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Card(
       elevation: 4,
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -80,8 +82,11 @@ class _BudgetSectionState extends State<BudgetSection> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(AppLocalizations.of(context)!.category_budget_heading,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
+            Text(
+              AppLocalizations.of(context)!.category_budget_heading,
+              style: theme.textTheme.headline6
+                  ?.copyWith(fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 10),
             Row(
               children: [
