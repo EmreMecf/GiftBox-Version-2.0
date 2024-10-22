@@ -62,8 +62,8 @@ dependencies:
   image_picker: ^1.0.7
   permission_handler: ^11.0.1
   flutter_image_compress: ^2.3.0
-  awesome_snackbar_content: ^0.1.4
   path_provider: ^2.1.2
+  fluttertoast: ^8.2.5
 
 
 
@@ -106,7 +106,7 @@ flutter:
 
       # To add custom fonts to your application, add a fonts section here,
       # in this "flutter" section. Each entry in this list should have a
-      # "family" key with the font family name, and a "fonts" key with a
+    # "family" key with the font family name, and a "fonts" key with a
     # list giving the asset and other descriptors for the font. For
     # example:
     # For details regarding fonts from package dependencies,

@@ -63,7 +63,8 @@ Future initInjector() async {
       () => SignInViewModel(injector(), injector()));
   injector.registerFactory<SignOutViewModel>(
       () => SignOutViewModel(injector(), injector()));
-  injector.registerFactory<MessagesViewModel>(() => MessagesViewModel());
+  injector
+      .registerFactory<MessageViewModel>(() => MessageViewModel(injector()));
   injector
       .registerFactory<HistoryViewModel>(() => HistoryViewModel(injector()));
   injector
@@ -96,4 +97,6 @@ Future initInjector() async {
       () => CategorySelectionViewModel());
   injector.registerFactory<ChatBotViewModel>(
       () => ChatBotViewModel(injector(), injector(), injector()));
+  injector.registerFactory(
+      () => MessageTitleRenameViewModel(injector(), injector()));
 }

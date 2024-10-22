@@ -17,20 +17,19 @@ class FirebaseFirestoreRepository {
     }
   }
 
-  Stream<Result<HistoryModel, Exception>> listenToMessage(String messageId) {
-    return _firestoreService.listenToMessage(messageId).map((querySnapshot) {
-      if (querySnapshot.exists && querySnapshot.data() != null) {
-        try {
-          final history = HistoryModel.fromJson(querySnapshot.data()!);
-          return Success(history);
-        } catch (e) {
-          return Failure(Exception('Veri dönüştürme hatası: $e'));
-        }
+  Future<Result<HistoryModel, Exception>> fetchMessage(String messageId) async {
+    try {
+      final docSnapshot = await _firestoreService.getToMessage(messageId);
+
+      if (docSnapshot.exists && docSnapshot.data() != null) {
+        final history = HistoryModel.fromJson(docSnapshot.data()!);
+        return Success(history);
       } else {
-        // Eğer snapshot boş ise, bir Failure sonucu döndürelim
-        return Failure(Exception('Son mesaj bulunamadı.'));
+        return Failure(Exception('Mesaj bulunamadı.'));
       }
-    });
+    } catch (e) {
+      return Failure(Exception('Veri çekme hatası: $e'));
+    }
   }
 
   /// Kullanıcıya ait tüm history kayıtlarını almak için stream
@@ -52,9 +51,9 @@ class FirebaseFirestoreRepository {
   Future<Result<void, Exception>> deleteHistoryMessage(String messageId) async {
     try {
       await _firestoreService.deleteMessage(messageId);
-      return const Success(null); // Başarılı sonuç
+      return const Success(null);
     } catch (e) {
-      return Failure(Exception('Mesaj silinemedi: $e')); // Hata sonucu
+      return Failure(Exception('Mesaj silinemedi:')); // Hata sonucu
     }
   }
 

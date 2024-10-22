@@ -28,11 +28,10 @@ class ChatBotViewModel with ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  CategorySelectionModel?
-      categorySelection; // Kullanıcının seçtiği kategorileri sakla
+  CategorySelectionModel? categorySelection;
 
   String? get userId => _firebaseAuthRepository.currentUserId;
-  Stream<HistoryModel?>? messageStream;
+  Future<HistoryModel?>? messageStream;
 
   List<ProductsModel> parseProducts(String? responseMessage) {
     if (responseMessage != null) {
@@ -63,6 +62,7 @@ class ChatBotViewModel with ChangeNotifier {
 
           final history = HistoryModel(
             userId: userId!,
+            categorySelection: categorySelection.toJson(),
             chatGptRequest: chatGptRequest,
             chatGptResponse: responseMessage,
             timestamp: DateTime.now(),
@@ -71,13 +71,16 @@ class ChatBotViewModel with ChangeNotifier {
           );
           final result =
               await _firebaseFirestoreRepository.saveHistory(history);
-          messageStream = fetchMessage((result as Success).value);
+          messageStream = fetchMessage((result as Success)
+              .value); // Firestore'dan alınan mesaj ID'yi kullanın
+          notifyListeners();
         }
       } else {
         throw Exception('ChatGPT hatası: $result');
       }
-    } catch (error) {
-      print(error);
+    } catch (error, stackTrace) {
+      print('Hata: $error');
+      print('Stack trace: $stackTrace');
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -85,17 +88,17 @@ class ChatBotViewModel with ChangeNotifier {
   }
 
   // Firestore'dan son mesajı çek
-  Stream<HistoryModel?> fetchMessage(String messageId) {
-    return _firebaseFirestoreRepository
-        .listenToMessage(messageId)
-        .map((result) {
-      if (result is Success<HistoryModel, Exception>) {
-        return result.value;
-      } else {
-        print('Mesaj alınırken hata: ${result.toString()}');
-        return null;
-      }
-    });
+  Future<HistoryModel?> fetchMessage(String messageId) async {
+    final result = await _firebaseFirestoreRepository.fetchMessage(messageId);
+
+    if (result is Success<HistoryModel, Exception>) {
+      return result.value;
+    } else if (result is Failure) {
+      print('Mesaj alınırken hata: $result');
+      return null;
+    } else {
+      return null;
+    }
   }
 
   // ChatGPT'ye gönderilecek mesajı oluşturur

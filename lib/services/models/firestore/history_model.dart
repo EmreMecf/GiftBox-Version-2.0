@@ -16,7 +16,7 @@ class HistoryModel with _$HistoryModel {
     required String chatGptResponse,
     @TimestampConverter() required DateTime timestamp,
     List<ProductsModel>? products,
-    CategorySelectionModel? categorySelection,
+    Map<String, dynamic>? categorySelection,
     required String title,
   }) = _HistoryModel;
 

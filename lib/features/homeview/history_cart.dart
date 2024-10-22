@@ -7,7 +7,7 @@ import 'package:giftbox/viewmodel/history_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HistoryCard extends StatefulWidget {
-  final String userId; // Kullanıcının ID'si bu widget'a geçilecek.
+  final String userId;
 
   const HistoryCard({Key? key, required this.userId}) : super(key: key);
 
@@ -20,7 +20,6 @@ class _HistoryCardState extends State<HistoryCard> {
   void initState() {
     super.initState();
 
-    // Firestore'dan verileri almak için kullanıcı ID'si ile fetchHistory çağrısı yapılır.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final historyViewModel = context.read<HistoryViewModel>();
       historyViewModel.fetchHistory(widget.userId);
@@ -32,7 +31,7 @@ class _HistoryCardState extends State<HistoryCard> {
     final historyDetailNavigationViewModel =
         context.read<HistoryDetailNavigationViewModel>();
     final historyDeleteViewModel = context.read<HistoryDeleteViewModel>();
-    final theme = Theme.of(context); // Temayı al
+    final theme = Theme.of(context);
 
     return Consumer<HistoryViewModel>(
       builder: (context, viewModel, child) {
@@ -68,7 +67,6 @@ class _HistoryCardState extends State<HistoryCard> {
                 trailing: PopupMenuButton<String>(
                   onSelected: (value) async {
                     if (value == 'rename') {
-                      // Yeniden adlandırma işlemi için dialog göster
                       showDialog(
                         context: context,
                         builder: (context) => RenameDialog(
@@ -77,7 +75,6 @@ class _HistoryCardState extends State<HistoryCard> {
                         ),
                       );
                     } else if (value == 'delete') {
-                      // Silme işlemi
                       await historyDeleteViewModel.deleteMessage(
                           context, message.messageId!);
                     }

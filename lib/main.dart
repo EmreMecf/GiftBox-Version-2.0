@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => injector<HistoryViewModel>()),
-        ChangeNotifierProvider(create: (_) => injector<MessagesViewModel>()),
+        ChangeNotifierProvider(create: (_) => injector<MessageViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<SignInViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<SignOutViewModel>()),
         ChangeNotifierProvider(
@@ -60,6 +60,8 @@ class _MyAppState extends State<MyApp> {
         Provider(create: (_) => injector<ProfileRouteViewModel>()),
         Provider(create: (_) => injector<SettingsViewModel>()),
         Provider(create: (_) => injector<NavBarRoute>()),
+        ChangeNotifierProvider(
+            create: (_) => injector<MessageTitleRenameViewModel>()),
         ChangeNotifierProvider(create: (_) => injector<ProfileEditViewModel>()),
         ChangeNotifierProvider(
             create: (_) => injector<UpdateProfileViewModel>()),

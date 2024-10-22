@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:giftbox/services/repositories/firebase_firestore_repository.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:giftbox/viewmodel/index.dart';
 import 'package:provider/provider.dart';
 
 class RenameDialog extends StatelessWidget {
-  final String messageId; // Mesaj ID'si
-  final String currentTitle; // Mevcut başlık
+  final String messageId;
+  final String currentTitle;
 
   const RenameDialog(
       {Key? key, required this.messageId, required this.currentTitle})
@@ -15,8 +16,8 @@ class RenameDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController _controller =
         TextEditingController(text: currentTitle);
-    final firebaseFirestoreRepository =
-        context.read<FirebaseFirestoreRepository>();
+    final messageTitleRenameViewModel =
+        context.read<MessageTitleRenameViewModel>();
 
     return AlertDialog(
       title: Text(AppLocalizations.of(context)!.rename_dialog_heading_label),
@@ -37,8 +38,27 @@ class RenameDialog extends StatelessWidget {
           onPressed: () async {
             final newTitle = _controller.text;
             if (newTitle.isNotEmpty) {
-              await firebaseFirestoreRepository.updateMessageTitle(
+              // Yeni başlığı güncelle
+              await messageTitleRenameViewModel.updateMessageTitle(
                   messageId, newTitle);
+
+              // Başarı veya hata durumuna göre toast mesajını göster
+              final errorViewModel = context.read<ErrorViewModel>();
+              if (errorViewModel.hasError) {
+                Fluttertoast.showToast(
+                  msg: errorViewModel.errorMessage,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                );
+              } else {
+                Fluttertoast.showToast(
+                  msg: errorViewModel.successMessage,
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                );
+              }
+              // Mesajlar temizlenir ve dialog kapanır
+              errorViewModel.clearMessages();
               Navigator.of(context).pop();
             }
           },

@@ -8,7 +8,7 @@ class FirebaseFirestoreService {
   Future<String> saveHistory(HistoryModel history) async {
     try {
       final docRef = _firestore.collection('history').doc();
-      final historyJson = history.toJson(); // HistoryModel'i JSON'a dönüştür
+      final historyJson = history.toJson();
       await docRef.set({
         ...historyJson,
         'products':
@@ -17,19 +17,18 @@ class FirebaseFirestoreService {
       });
       await docRef.update({'messageId': docRef.id});
       return docRef.id;
-      print('Mesaj başarıyla kaydedildi.');
     } catch (e) {
       print('Mesaj kaydedilirken hata oluştu: $e');
       throw Exception('Mesaj kaydedilemedi');
     }
   }
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> listenToMessage(
+  Future<DocumentSnapshot<Map<String, dynamic>>> getToMessage(
       String messageId) {
     return FirebaseFirestore.instance
         .collection('history')
         .doc(messageId)
-        .snapshots();
+        .get();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getHistoryList(String userId) {

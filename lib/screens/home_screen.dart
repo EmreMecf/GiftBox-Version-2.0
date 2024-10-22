@@ -37,19 +37,17 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: const CustomAppBar(),
       body: Column(
         children: [
-          PromoCard(),
+          const PromoCard(),
           Expanded(
             child: Consumer<ProfileViewModel>(
               builder: (context, profileViewModel, child) {
                 final userId = profileViewModel.userId;
-
-                // Eğer kullanıcı kimliği yüklendiyse HistoryCard'a gönderiyoruz
                 if (userId!.isNotEmpty) {
                   return HistoryCard(userId: userId);
                 } else {
                   return const Center(
                     child: CircularProgressIndicator(),
-                  ); // Yükleme durumu için.
+                  );
                 }
               },
             ),

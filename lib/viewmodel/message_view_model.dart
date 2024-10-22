@@ -12,16 +12,14 @@ class MessageViewModel with ChangeNotifier {
   Stream<HistoryModel?>? messageStream;
 
   // Firestore'dan mesajı çek
-  Stream<HistoryModel?> fetchMessage(String messageId) {
-    return _firebaseFirestoreRepository
-        .listenToMessage(messageId)
-        .map((result) {
-      if (result is Success<HistoryModel, Exception>) {
-        return result.value;
-      } else {
-        print('Mesaj alınırken hata: ${result.toString()}');
-        return null;
-      }
-    });
+  Future<HistoryModel?> fetchMessage(String messageId) async {
+    final result = await _firebaseFirestoreRepository.fetchMessage(messageId);
+
+    if (result is Success<HistoryModel, Exception>) {
+      return result.value;
+    } else {
+      print('Mesaj alınırken hata: ${result.toString()}');
+      return null;
+    }
   }
 }

@@ -16,5 +16,5 @@ class CategorySelectionModel with _$CategorySelectionModel {
   }) = _CategorySelectionModel;
 
   factory CategorySelectionModel.fromJson(Map<String, dynamic> json) =>
-      _$CategorySelectionModelFromJson(json); // JSON'dan deserialize et
+      _$CategorySelectionModelFromJson(json);
 }
