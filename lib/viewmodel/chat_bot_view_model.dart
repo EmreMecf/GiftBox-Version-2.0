@@ -29,9 +29,10 @@ class ChatBotViewModel with ChangeNotifier {
   bool get isLoading => _isLoading;
 
   CategorySelectionModel? categorySelection;
+  String? messageId;
 
   String? get userId => _firebaseAuthRepository.currentUserId;
-  Future<HistoryModel?>? messageStream;
+  HistoryModel? currentMessage;
 
   List<ProductsModel> parseProducts(String? responseMessage) {
     if (responseMessage != null) {
@@ -60,8 +61,10 @@ class ChatBotViewModel with ChangeNotifier {
           _productsList = parseProducts(responseMessage);
           notifyListeners();
 
+          final userId = this.userId ?? 'UnknownUser';
+
           final history = HistoryModel(
-            userId: userId!,
+            userId: userId,
             categorySelection: categorySelection.toJson(),
             chatGptRequest: chatGptRequest,
             chatGptResponse: responseMessage,
@@ -69,33 +72,64 @@ class ChatBotViewModel with ChangeNotifier {
             title: "Hediye Önerileri",
             products: _productsList,
           );
-          final result =
+
+          final saveResult =
               await _firebaseFirestoreRepository.saveHistory(history);
-          messageStream = fetchMessage((result as Success)
-              .value); // Firestore'dan alınan mesaj ID'yi kullanın
-          notifyListeners();
+
+          if (saveResult is Success<String, Exception>) {
+            // messageId'yi buraya ekledim.
+            messageId = saveResult.value;
+            currentMessage = await fetchMessage(messageId!);
+
+            notifyListeners(); // messageId'yi güncelledikten sonra notify ediyoruz
+          } else {
+            throw Exception('Mesaj kaydetme başarısız.');
+          }
         }
       } else {
         throw Exception('ChatGPT hatası: $result');
       }
-    } catch (error, stackTrace) {
+    } catch (error) {
       print('Hata: $error');
-      print('Stack trace: $stackTrace');
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  // Firestore'dan son mesajı çek
+  Future<void> loadMessage() async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      if (messageId != null) {
+        final message = await fetchMessage(messageId!);
+
+        if (message != null) {
+          currentMessage = message;
+
+          if (message.categorySelection != null) {
+            categorySelection =
+                CategorySelectionModel.fromJson(message.categorySelection!);
+          }
+        } else {
+          throw Exception('Mesaj bulunamadı.');
+        }
+      } else {
+        throw Exception('Geçersiz mesaj ID\'si.');
+      }
+    } catch (e) {
+      print('Hata: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
   Future<HistoryModel?> fetchMessage(String messageId) async {
     final result = await _firebaseFirestoreRepository.fetchMessage(messageId);
-
     if (result is Success<HistoryModel, Exception>) {
       return result.value;
-    } else if (result is Failure) {
-      print('Mesaj alınırken hata: $result');
-      return null;
     } else {
       return null;
     }

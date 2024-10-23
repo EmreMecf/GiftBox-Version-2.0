@@ -81,7 +81,7 @@ class UpdateProfileImageViewModel with ChangeNotifier {
     notifyListeners();
 
     // Sıkıştırma işlemi
-    File? compressedImage = (await compressImage(_selectedImage!)) as File?;
+    File? compressedImage = (await compressImage(_selectedImage!));
 
     if (compressedImage != null) {
       // Sıkıştırılmış resmi Firebase'e yükle

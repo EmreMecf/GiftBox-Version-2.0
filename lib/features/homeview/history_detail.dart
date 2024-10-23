@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:giftbox/features/chatbot/index.dart';
 import 'package:giftbox/features/messagesview/messages_list.dart';
 import 'package:giftbox/services/models/firestore/index.dart';
-import 'package:provider/provider.dart';
-
-import '../../viewmodel/index.dart';
+import 'package:giftbox/services/models/states/category_selection_model.dart';
 
 class HistoryDetailScreen extends StatelessWidget {
   final HistoryModel message;
@@ -16,22 +14,26 @@ class HistoryDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categorySelection = context.read<CategorySelectionViewModel>();
+    // Mesaj içindeki categorySelection'u alıyoruz
+    final CategorySelectionModel? categorySelection =
+        message.categorySelection != null
+            ? CategorySelectionModel.fromJson(message.categorySelection!)
+            : null;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mesaj Detayları'),
       ),
       body: SingleChildScrollView(
-        // Kaydırılabilir alan
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SelectedCategoriesWidget(
-                categorySelection:
-                    categorySelection.buildCategorySelectionModel()),
+            // Eğer categorySelection varsa gösteriyoruz
+            if (categorySelection != null)
+              SelectedCategoriesWidget(categorySelection: categorySelection),
             const SizedBox(height: 20),
+            // Ürünler
             AiMessage(products: message.products ?? []),
           ],
         ),

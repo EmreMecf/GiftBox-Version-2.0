@@ -20,19 +20,10 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   @override
   void initState() {
     super.initState();
-    final chatBotViewModel = context.read<ChatBotViewModel>();
-    chatBotViewModel.messageStream?.then((message) {
-      if (message != null) {
-        setState(() {
-          messageId = message.messageId;
-          if (message.categorySelection != null) {
-            categorySelection =
-                CategorySelectionModel.fromJson(message.categorySelection!);
-          }
-        });
-      } else {
-        print('Mesaj alınamadı.');
-      }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final chatBotViewModel = context.read<ChatBotViewModel>();
+      chatBotViewModel.loadMessage(); // ViewModel'den çağırıyoruz.
     });
   }
 
@@ -46,16 +37,19 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
       ),
       body: chatBotViewModel.isLoading
           ? const Center(child: CircularProgressIndicator())
-          : messageId == null
+          : chatBotViewModel.messageId == null
               ? const Center(child: Text('Mesaj ID eksik.'))
               : SingleChildScrollView(
                   child: Column(
                     children: [
                       if (chatBotViewModel.categorySelection != null)
                         SelectedCategoriesWidget(
-                            categorySelection: categorySelection!),
+                            categorySelection:
+                                chatBotViewModel.categorySelection!),
                       FutureBuilder<HistoryModel?>(
-                        future: chatBotViewModel.fetchMessage(messageId!),
+                        future: chatBotViewModel
+                            .fetchMessage(chatBotViewModel.messageId!),
+                        // messageId doğrudan kullanılıyor
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
