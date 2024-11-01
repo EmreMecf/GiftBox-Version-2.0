@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InterestsSection extends StatelessWidget {
   final String selectedCategory;
@@ -14,17 +15,58 @@ class InterestsSection extends StatelessWidget {
     required this.onInterestToggled,
   }) : super(key: key);
 
-  final Map<String, List<String>> _categoryInterests = const {
-    'Eğlence': ['Masa Oyunu', 'Video Oyunu', 'Kart Oyunu', 'Film/Dizi'],
-    'Müzik': ['Gitar', 'Davul', 'Plak', 'Rap', 'Pop'],
-    'Teknoloji': ['Yapay Zeka', 'Programlama', 'Donanım'],
-    'Spor': ['Futbol', 'Basketbol', 'Yüzme'],
-    'Moda': ['Giyim', 'Ayakkabı', 'Aksesuar'],
-  };
+  // Kategorileri ve ilgi alanlarını AppLocalizations ile alma
+  Map<String, List<String>> getCategoryInterests(AppLocalizations locale) {
+    return {
+      locale.category_entertainment: [
+        locale.interest_board_game,
+        locale.interest_video_game,
+        locale.interest_card_game,
+        locale.interest_movies,
+      ],
+      locale.category_music: [
+        locale.interest_guitar,
+        locale.interest_drum,
+        locale.interest_vinyl,
+        locale.interest_rap,
+        locale.interest_pop,
+      ],
+      locale.category_technology: [
+        locale.interest_ai,
+        locale.interest_programming,
+        locale.interest_hardware,
+        locale.interest_phone,
+        locale.interest_computer,
+        locale.interest_drone,
+        locale.interest_smart_watch,
+      ],
+      locale.category_sports: [
+        locale.interest_football,
+        locale.interest_basketball,
+        locale.interest_swimming,
+        locale.interest_volleyball,
+        locale.interest_running,
+        locale.interest_table_tennis,
+      ],
+      locale.category_fashion: [
+        locale.interest_clothing,
+        locale.interest_shoes,
+        locale.interest_accessories,
+        locale.interest_tshirt,
+        locale.interest_shirt,
+        locale.interest_sweatpants,
+        locale.interest_pants,
+        locale.interest_tie,
+        locale.interest_watch,
+      ],
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final locale = AppLocalizations.of(context)!;
+    final categoryInterests = getCategoryInterests(locale);
 
     return Card(
       elevation: 4,
@@ -36,14 +78,14 @@ class InterestsSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'İlgi Alanları',
-              style: theme.textTheme.headline6
+              locale.category_interest_heading,
+              style: theme.textTheme.titleLarge
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             Wrap(
               spacing: 8,
-              children: _categoryInterests.keys.map((category) {
+              children: categoryInterests.keys.map((category) {
                 return GestureDetector(
                   onTap: () => onCategoryChanged(category),
                   child: Container(
@@ -70,7 +112,8 @@ class InterestsSection extends StatelessWidget {
             const SizedBox(height: 10),
             Wrap(
               spacing: 8,
-              children: _categoryInterests[selectedCategory]!.map((interest) {
+              children:
+                  (categoryInterests[selectedCategory] ?? []).map((interest) {
                 return FilterChip(
                   label: Text(
                     interest,

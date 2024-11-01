@@ -37,8 +37,6 @@ class SignInViewModel with ChangeNotifier {
     if (result is Success) {
       _errorMessage = null;
       await FirebaseAuth.instance.currentUser?.reload();
-
-      // Kullanıcı durumunu güncelledikten sonra yeniden kontrol et
       if (FirebaseAuth.instance.currentUser != null) {
         print('Navigating to home...');
         _navigationService.goHome();
