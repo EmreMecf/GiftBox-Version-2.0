@@ -3,6 +3,8 @@
   "app_title": "Hediye Kutusu",
   "account": "Hesap",
   "country": "Ülke",
+  "login_screen_welcome_label":"Hoş Geldin",
+  "login_screen_slogan_label":"Hediyen Bizden Alması Sizden",
   "nav_bar_home_label": "Ana Sayfa",
   "home_promo_cart_heading": "Mind Box ile Hediye Bul",
   "home_promo_cart_title": "Hediye seçimi konusunda kararsız mı kaldın? MindBox, sevdiklerinin ilgi alanlarına, hobilerine ve kişiligine en uygun hediyeleri saniyeler içinde bulmanı saglar.",

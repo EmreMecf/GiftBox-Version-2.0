@@ -37,12 +37,9 @@ class SignInViewModel with ChangeNotifier {
     if (result is Success) {
       _errorMessage = null;
       await FirebaseAuth.instance.currentUser?.reload();
-      final user = FirebaseAuth.instance.currentUser;
 
-      // Firebase'in kullanıcı durumunu güncellemesi için kısa bir gecikme ekleyin
-      await Future.delayed(const Duration(seconds: 2));
-
-      if (_authRepository.currentUser != null) {
+      // Kullanıcı durumunu güncelledikten sonra yeniden kontrol et
+      if (FirebaseAuth.instance.currentUser != null) {
         print('Navigating to home...');
         _navigationService.goHome();
       } else {

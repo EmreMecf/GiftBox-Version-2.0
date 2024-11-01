@@ -75,7 +75,7 @@ class CategorySelectionViewModel with ChangeNotifier {
     _specialDay = 'Doğum Günü';
     _selectedInterests = [];
     _selectedCategory = 'Eğlence';
-    notifyListeners(); // UI'ı güncelle
+    notifyListeners();
   }
 
   CategorySelectionModel buildCategorySelectionModel() {

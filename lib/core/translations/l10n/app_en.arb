@@ -4,6 +4,9 @@
   "account": "Account",
   "country": "Country",
   "nav_bar_home_label": "Home",
+  "login_screen_welcome_label": "Welcome",
+  "login_screen_slogan_label":"It's up to you not to take your gift from us.",
+
   "home_promo_cart_heading": "Find a Gift with Mind Box",
   "home_promo_cart_title": "Are you indecisive about choosing a gift? MindBox helps you find the perfect gifts for your loved ones that match their interests, hobbies, and personality in seconds.",
   "nav_bar_calender_label": "Calender",
