@@ -23,7 +23,7 @@ class AgeSection extends StatelessWidget {
           children: [
             Text(
               AppLocalizations.of(context)!.category_age_heading,
-              style: theme.textTheme.headline6
+              style: theme.textTheme.headlineMedium
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
@@ -53,7 +53,7 @@ class AgeSection extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   '${AppLocalizations.of(context)!.category_age_little_title} ${age.round()}',
-                  style: theme.textTheme.bodyText1,
+                  style: theme.textTheme.bodySmall,
                 ),
               ],
             ),

@@ -84,7 +84,7 @@ class _BudgetSectionState extends State<BudgetSection> {
           children: [
             Text(
               AppLocalizations.of(context)!.category_budget_heading,
-              style: theme.textTheme.headline6
+              style: theme.textTheme.headlineMedium
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),

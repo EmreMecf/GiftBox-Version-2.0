@@ -7,6 +7,50 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:692605394807:android:26f55a5033913e67e3cb72",
+        "android_client_info": {
+          "package_name": "com.emreciftci.giftbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "692605394807-s2n25irik8qbfocha9dl79e1mmm7qhfd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.emreciftci.giftbox",
+            "certificate_hash": "40a255fe7299b4ca3f108761d3d63e4e24a1cac0"
+          }
+        },
+        {
+          "client_id": "692605394807-96kejt6806mp491nj2q1scqltu09h932.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Q_X2y1-ZqEA-6n_GvgZYSxv_frteNKk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "692605394807-96kejt6806mp491nj2q1scqltu09h932.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "692605394807-jd59mpu2fsnisv21e3vahmhhpt14venv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.giftbox"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:692605394807:android:c099d96c18b524f9e3cb72",
         "android_client_info": {
           "package_name": "com.example.giftbox"

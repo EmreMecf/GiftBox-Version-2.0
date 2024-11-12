@@ -35,7 +35,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale = const Locale('en'); // Varsayılan dil İngilizce
+  Locale _locale = const Locale('tr'); // Varsayılan dil İngilizce
 
   @override
   Widget build(BuildContext context) {
