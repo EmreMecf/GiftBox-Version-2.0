@@ -13,7 +13,7 @@ class FirebaseFirestoreService {
         ...historyJson,
         'products':
             history.products?.map((product) => product.toJson()).toList(),
-        'timestamp': Timestamp.fromDate(history.timestamp), // Timestamp ayarı
+        'timestamp': Timestamp.fromDate(history.timestamp),
       });
       await docRef.update({'messageId': docRef.id});
       return docRef.id;

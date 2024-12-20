@@ -8,8 +8,10 @@ class SloganText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       AppLocalizations.of(context)!.login_screen_slogan_label,
-      style: Theme.of(context).textTheme.bodyLarge,
-      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+            color: Colors.grey[600], // Daha yumuşak bir renk tonu
+          ),
+      textAlign: TextAlign.center, // Metni ortala
     );
   }
 }

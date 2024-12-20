@@ -11,6 +11,7 @@ export 'language_view_model.dart';
 export 'message_titile_rename_view_model.dart';
 export 'message_view_model.dart';
 export 'nav_bar_route.dart';
+export 'on_board_view_model.dart';
 export 'profil_edit_view_model.dart';
 export 'profil_route_view_model.dart';
 export 'profile_view_model.dart';

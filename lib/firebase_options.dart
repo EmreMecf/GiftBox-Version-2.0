@@ -64,7 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '692605394807',
     projectId: 'mindbox-3afe9',
     storageBucket: 'mindbox-3afe9.appspot.com',
-    iosBundleId: 'com.example.giftbox',
+    iosBundleId: 'com.emreciftci.giftbox',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -73,7 +73,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '692605394807',
     projectId: 'mindbox-3afe9',
     storageBucket: 'mindbox-3afe9.appspot.com',
-    iosBundleId: 'com.example.giftbox',
+    iosBundleId: 'com.emreciftci.giftbox',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
@@ -85,5 +85,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'mindbox-3afe9.appspot.com',
     measurementId: 'G-BP1KSWK20N',
   );
-
 }

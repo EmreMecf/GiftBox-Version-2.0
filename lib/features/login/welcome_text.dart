@@ -8,9 +8,11 @@ class WelcomeText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       AppLocalizations.of(context)!.login_screen_welcome_label,
-      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
             fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.primary, // Temaya göre renk
           ),
+      textAlign: TextAlign.center, // Metni ortala
     );
   }
 }

@@ -11,7 +11,7 @@ class EditProfilePhoto extends StatelessWidget {
   Widget build(BuildContext context) {
     final profileViewModel = context.watch<ProfileViewModel>();
     final updateProfileImageViewModel =
-        Provider.of<UpdateProfileImageViewModel>(context, listen: false);
+        context.watch<UpdateProfileImageViewModel>();
     final theme = Theme.of(context);
 
     return Column(

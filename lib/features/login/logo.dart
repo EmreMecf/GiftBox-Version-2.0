@@ -5,9 +5,13 @@ class LogoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      'lib/assets/logo.png',
-      height: 100,
+    return Container(
+      alignment: Alignment.center,
+      child: Image.asset(
+        'lib/assets/logo.png', // Logo dosya yolu
+        height: 100, // Logo yüksekliği
+        fit: BoxFit.contain, // Logo'nun boyutlandırılması
+      ),
     );
   }
 }
