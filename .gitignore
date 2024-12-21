@@ -47,3 +47,5 @@ app.*.map.json
 *.freezed.dart
 *.g.dart
 *.firebase.json
+*.firebase_options.dart
+*.GoogleService-Info.plist

@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "692605394807",
+    "project_id": "mindbox-3afe9",
+    "storage_bucket": "mindbox-3afe9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692605394807:android:103c7a0a45eeb548e3cb72",
+        "android_client_info": {
+          "package_name": "com.emrec.giftbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "692605394807-cjeb3vtns9mcfqf8sioh44drvgbm97ov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.emrec.giftbox",
+            "certificate_hash": "a181bfcd7a03c6e6ce3d78d6dda63d93bab8ba29"
+          }
+        },
+        {
+          "client_id": "692605394807-96kejt6806mp491nj2q1scqltu09h932.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Q_X2y1-ZqEA-6n_GvgZYSxv_frteNKk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "692605394807-96kejt6806mp491nj2q1scqltu09h932.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "692605394807-jd59mpu2fsnisv21e3vahmhhpt14venv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.giftbox"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692605394807:android:26f55a5033913e67e3cb72",
+        "android_client_info": {
+          "package_name": "com.emreciftci.giftbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "692605394807-s2n25irik8qbfocha9dl79e1mmm7qhfd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.emreciftci.giftbox",
+            "certificate_hash": "ba766fd1640cd502b855a4a8cf808ddc19a18cf3"
+          }
+        },
+        {
+          "client_id": "692605394807-96kejt6806mp491nj2q1scqltu09h932.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Q_X2y1-ZqEA-6n_GvgZYSxv_frteNKk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "692605394807-96kejt6806mp491nj2q1scqltu09h932.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "692605394807-jd59mpu2fsnisv21e3vahmhhpt14venv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.giftbox"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
